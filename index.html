@@ -441,8 +441,34 @@ dialog.lb button { position: fixed; top: 16px; right: 16px; width: 40px; height:
       </div>
     </article>
 
-    <!-- Fruit fly -->
+    <!-- Thesis -->
     <article class="project flip">
+      <div class="media rv">
+        <div class="frame"><img src="assets/thesis/sokoban-level.png" alt="A Boxoban level: push every box onto a goal" loading="lazy" style="image-rendering:pixelated"></div>
+        <button class="thumb" style="aspect-ratio:auto;background:#fff" data-lb="assets/thesis/results-table.png" data-cap="Table 6.1 from the thesis"><img src="assets/thesis/results-table.png" alt="Thesis results table" loading="lazy"></button>
+      </div>
+      <div class="rv">
+        <div class="kicker"><span class="when">Spring 2026</span><span>Honors thesis</span><span>Search + learning</span></div>
+        <h3>Neuroevolution of compact search heuristics in Sokoban</h3>
+        <p>Can evolution find a <b>tiny</b> learned heuristic that A* can use on unseen puzzles? I built a forward-BFS
+          trajectory generator with deadlock pruning to get exact cost-to-go labels, then trained NEAT and CoDeepNEAT heuristics
+          and compared them with Manhattan distance and a DeepCubeA-style CNN.</p>
+        <table class="tbl">
+          <thead><tr><th>Heuristic</th><th class="num">Params</th><th class="num">Solved / 294</th></tr></thead>
+          <tbody>
+            <tr><td>Manhattan distance</td><td class="num">0</td><td class="num">87.4%</td></tr>
+            <tr class="hl"><td>NEAT (9-config mean)</td><td class="num">~25</td><td class="num">83.9%</td></tr>
+            <tr><td>CoDeepNEAT</td><td class="num">263,361</td><td class="num">88.8%</td></tr>
+            <tr><td>CNN cost-to-go</td><td class="num">2,031,809</td><td class="num">100%</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:13px;color:var(--muted)">Held-out Boxoban medium levels, A* with a 100k-node budget. A ~25-weight network gets within 4 points of a hand-made baseline.</p>
+        <ul class="chips"><li>A*</li><li>NEAT</li><li>CoDeepNEAT</li><li>BFS</li><li>Boxoban</li></ul>
+      </div>
+    </article>
+
+    <!-- Fruit fly -->
+    <article class="project">
       <div class="media rv">
         <div class="frame"><video controls muted loop playsinline preload="none" poster="assets/fruitfly/poster.jpg" src="assets/fruitfly/fruitfly.mp4"></video></div>
         <button class="thumb" style="aspect-ratio:auto" data-lb="assets/fruitfly/fitness-chart.png" data-cap="Best fitness over 600 generations">
@@ -465,32 +491,6 @@ dialog.lb button { position: fixed; top: 16px; right: 16px; width: 40px; height:
         </table>
         <p style="font-size:13px;color:var(--muted)">Initial results, read off the training curves. *Recurrent Neuro-PAL ran ~320 generations.</p>
         <ul class="chips"><li>NEAT</li><li>Neuro-PAL</li><li>RNN</li><li>MuJoCo</li><li>multiprocessing</li></ul>
-      </div>
-    </article>
-
-    <!-- Thesis -->
-    <article class="project">
-      <div class="media rv">
-        <div class="frame"><img src="assets/thesis/sokoban-level.png" alt="A Boxoban level: push every box onto a goal" loading="lazy" style="image-rendering:pixelated"></div>
-        <button class="thumb" style="aspect-ratio:auto;background:#fff" data-lb="assets/thesis/results-table.png" data-cap="Table 6.1 from the thesis"><img src="assets/thesis/results-table.png" alt="Thesis results table" loading="lazy"></button>
-      </div>
-      <div class="rv">
-        <div class="kicker"><span class="when">Spring 2026</span><span>Honors thesis</span><span>Search + learning</span></div>
-        <h3>Neuroevolution of compact search heuristics in Sokoban</h3>
-        <p>Can evolution find a <b>tiny</b> learned heuristic that A* can use on unseen puzzles? I built a forward-BFS
-          trajectory generator with deadlock pruning to get exact cost-to-go labels, then trained NEAT and CoDeepNEAT heuristics
-          and compared them with Manhattan distance and a DeepCubeA-style CNN.</p>
-        <table class="tbl">
-          <thead><tr><th>Heuristic</th><th class="num">Params</th><th class="num">Solved / 294</th></tr></thead>
-          <tbody>
-            <tr><td>Manhattan distance</td><td class="num">0</td><td class="num">87.4%</td></tr>
-            <tr class="hl"><td>NEAT (9-config mean)</td><td class="num">~25</td><td class="num">83.9%</td></tr>
-            <tr><td>CoDeepNEAT</td><td class="num">263,361</td><td class="num">88.8%</td></tr>
-            <tr><td>CNN cost-to-go</td><td class="num">2,031,809</td><td class="num">100%</td></tr>
-          </tbody>
-        </table>
-        <p style="font-size:13px;color:var(--muted)">Held-out Boxoban medium levels, A* with a 100k-node budget. A ~25-weight network gets within 4 points of a hand-made baseline.</p>
-        <ul class="chips"><li>A*</li><li>NEAT</li><li>CoDeepNEAT</li><li>BFS</li><li>Boxoban</li></ul>
       </div>
     </article>
 

@@ -1,0 +1,681 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yeonghun Lee · Robotics Software</title>
+<meta name="description" content="Yeonghun Lee: robot software, embedded control and learning-based control. SO-ARM101 imitation learning, servo drivers, a transforming robot, neuroevolution research and a Vulkan engine.">
+<meta property="og:title" content="Yeonghun Lee · Robotics Software">
+<meta property="og:description" content="Robot software, embedded control and learning-based control.">
+<meta property="og:image" content="assets/deceptacon/cad-walker.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0c0f;
+  --bg-2: #10141a;
+  --card: #131820;
+  --line: #222a35;
+  --text: #e6e9ee;
+  --muted: #8a94a3;
+  --accent: #ff8a3d;
+  --accent-2: #4cc9f0;
+  --ok: #7bd88f;
+  --radius: 14px;
+  --max: 1180px;
+  --mono: "JetBrains Mono", ui-monospace, monospace;
+  --head: "Space Grotesk", "Inter", system-ui, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font: 16px/1.65 "Inter", system-ui, sans-serif; -webkit-font-smoothing: antialiased;
+}
+img, video { display: block; max-width: 100%; }
+a { color: inherit; }
+::selection { background: var(--accent); color: #111; }
+
+/* ---------- nav ---------- */
+.progress { position: fixed; inset: 0 0 auto 0; height: 2px; z-index: 60;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2)); transform-origin: 0 50%; transform: scaleX(0); }
+nav { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  background: color-mix(in srgb, var(--bg) 72%, transparent); border-bottom: 1px solid transparent; transition: border-color .3s; }
+nav.scrolled { border-bottom-color: var(--line); }
+.nav-in { max-width: var(--max); margin: auto; padding: 14px 24px; display: flex; align-items: center; gap: 24px; }
+.brand { font: 600 15px var(--mono); text-decoration: none; letter-spacing: .02em; }
+.brand b { color: var(--accent); }
+.nav-links { display: flex; gap: 4px; margin-left: auto; overflow-x: auto; scrollbar-width: none; }
+.nav-links a { font-size: 14px; color: var(--muted); text-decoration: none; padding: 6px 12px; border-radius: 999px; white-space: nowrap; transition: color .2s, background .2s; }
+.nav-links a:hover { color: var(--text); }
+.nav-links a.active { color: #111; background: var(--accent); }
+
+/* ---------- layout ---------- */
+.wrap { max-width: var(--max); margin: auto; padding: 0 24px; }
+section { padding: 96px 0 40px; }
+.sec-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 40px; }
+.sec-num { font: 500 13px var(--mono); color: var(--accent); }
+.sec-head h2 { font: 700 clamp(30px, 4vw, 44px)/1.1 var(--head); margin: 0; letter-spacing: -.02em; }
+.sec-head p { margin: 0 0 0 auto; color: var(--muted); max-width: 520px; font-size: 15px; text-align: right; }
+
+/* ---------- hero ---------- */
+.hero { position: relative; padding: 72px 0 40px; overflow: hidden; }
+.hero::before { content: ""; position: absolute; inset: -40% -20% auto -20%; height: 120%; z-index: -1;
+  background:
+    radial-gradient(600px 400px at 15% 30%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 70%),
+    radial-gradient(520px 380px at 85% 10%, color-mix(in srgb, var(--accent-2) 16%, transparent), transparent 70%);
+  animation: drift 18s ease-in-out infinite alternate; }
+.hero::after { content: ""; position: absolute; inset: 0; z-index: -1; opacity: .35;
+  background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 48px 48px; mask-image: radial-gradient(ellipse at 50% 0%, #000 30%, transparent 75%); }
+@keyframes drift { to { transform: translate3d(4%, 6%, 0) scale(1.08); } }
+.hero-grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: 48px; align-items: center; }
+.hero-grid > *, .project > *, .two > *, .cards > * { min-width: 0; }
+.eyebrow { font: 500 13px var(--mono); color: var(--accent); letter-spacing: .08em; text-transform: uppercase; }
+.eyebrow .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--ok); margin-right: 8px;
+  box-shadow: 0 0 0 0 var(--ok); animation: pulse 2.4s infinite; vertical-align: 1px; }
+@keyframes pulse { 70% { box-shadow: 0 0 0 10px transparent; } }
+h1 { font: 700 clamp(44px, 7vw, 84px)/1 var(--head); letter-spacing: -.035em; margin: 18px 0 20px; }
+h1 .grad { background: linear-gradient(100deg, var(--text) 30%, var(--accent) 75%, var(--accent-2));
+  -webkit-background-clip: text; background-clip: text; color: transparent; }
+.lede { font-size: 19px; color: #c3c9d3; max-width: 34em; margin: 0 0 28px; }
+.lede strong { color: var(--text); font-weight: 600; }
+.cta { display: flex; flex-wrap: wrap; gap: 12px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 18px; border-radius: 10px; font-weight: 500; font-size: 15px;
+  text-decoration: none; border: 1px solid var(--line); background: var(--card); transition: transform .2s, border-color .2s, background .2s; }
+.btn:hover { transform: translateY(-2px); border-color: var(--muted); }
+.btn.primary { background: var(--accent); color: #111; border-color: var(--accent); }
+.btn svg { width: 18px; height: 18px; }
+.avatar { width: 112px; height: 112px; border-radius: 50%; object-fit: cover; display: block; margin-bottom: 20px;
+  border: 3px solid var(--bg); box-shadow: 0 0 0 1px var(--line); }
+.banner { display: none; }
+/* ponytail: banner test toggled by ?banner in the URL; delete the losing variant once decided */
+.with-banner { padding-top: 24px; }
+.with-banner .banner { display: block; aspect-ratio: 4 / 1; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); }
+.with-banner .banner img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.with-banner .avatar { width: 136px; height: 136px; margin: -84px 0 20px 24px; position: relative; border-width: 4px; }
+.with-banner .hero-grid { align-items: start; }
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line);
+  border-radius: var(--radius); overflow: hidden; margin-top: 56px; }
+.stat { background: var(--bg-2); padding: 20px 22px; }
+.stat b { display: block; font: 700 28px/1.1 var(--head); letter-spacing: -.02em; }
+.stat b em { font-style: normal; color: var(--accent); }
+.stat span { font-size: 13px; color: var(--muted); }
+
+.bento { display: grid; grid-template-columns: repeat(6, 1fr); grid-auto-rows: 92px; gap: 10px; }
+.tile { position: relative; overflow: hidden; border-radius: 12px; border: 1px solid var(--line); background: var(--card); }
+.tile img, .tile video { width: 100%; height: 100%; object-fit: cover; transition: transform .8s cubic-bezier(.2,.7,.2,1); }
+.tile:hover img, .tile:hover video { transform: scale(1.05); }
+/* ponytail: poster as a real <img> under the video so it crops like the video does (browsers draw poster= letterboxed) */
+.tile img + video { position: absolute; inset: 0; }
+.tile .tag { position: absolute; left: 10px; bottom: 10px; font: 500 11px var(--mono); padding: 4px 8px; border-radius: 6px;
+  background: rgba(0,0,0,.6); backdrop-filter: blur(6px); color: #fff; }
+.t1 { grid-column: span 4; grid-row: span 3; }
+.t2 { grid-column: span 2; grid-row: span 3; }
+.t3 { grid-column: span 4; grid-row: span 2; }
+.t4 { grid-column: span 2; grid-row: span 2; }
+
+/* ---------- project ---------- */
+.project { display: grid; grid-template-columns: 1.15fr 1fr; gap: 48px; align-items: start; padding: 48px 0; border-top: 1px solid var(--line); }
+.project:first-of-type { border-top: 0; padding-top: 0; }
+.project.flip > .media { order: 2; }
+.media { position: sticky; top: 96px; display: grid; gap: 10px; }
+.frame { position: relative; overflow: hidden; border-radius: var(--radius); border: 1px solid var(--line); background: #000; }
+.frame video, .frame img { width: 100%; max-height: 560px; object-fit: cover; }
+.thumbs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.thumb { padding: 0; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; cursor: zoom-in; background: var(--card); aspect-ratio: 4/3; }
+.thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s, opacity .3s; opacity: .85; }
+.thumb:hover img { transform: scale(1.06); opacity: 1; }
+.kicker { font: 500 12px var(--mono); color: var(--muted); letter-spacing: .06em; text-transform: uppercase; display: flex; gap: 10px; flex-wrap: wrap; }
+.kicker .when { color: var(--accent); }
+.project h3 { font: 700 32px/1.15 var(--head); letter-spacing: -.02em; margin: 10px 0 14px; }
+.project p { color: #c3c9d3; margin: 0 0 16px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 20px; padding: 0; list-style: none; }
+.chips li { font: 500 12px var(--mono); padding: 4px 10px; border: 1px solid var(--line); border-radius: 999px; color: #b5bdc9; }
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin: 20px 0; }
+.fact { border: 1px solid var(--line); border-radius: 12px; padding: 14px; background: var(--bg-2); }
+.fact b { display: block; font: 700 24px/1.1 var(--head); color: var(--text); }
+.fact span { font-size: 12.5px; color: var(--muted); line-height: 1.4; display: block; margin-top: 4px; }
+.story { list-style: none; padding: 0; margin: 18px 0; counter-reset: s; }
+.story li { position: relative; padding: 0 0 14px 34px; color: #c3c9d3; }
+.story li::before { counter-increment: s; content: counter(s, decimal-leading-zero); position: absolute; left: 0; top: 1px;
+  font: 500 12px var(--mono); color: var(--accent); }
+.story li::after { content: ""; position: absolute; left: 7px; top: 24px; bottom: 2px; width: 1px; background: var(--line); }
+.story li:last-child::after { display: none; }
+.story b { color: var(--text); font-weight: 600; }
+.links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
+.links a { font: 500 13px var(--mono); text-decoration: none; color: var(--accent); border-bottom: 1px dashed color-mix(in srgb, var(--accent) 50%, transparent); padding-bottom: 1px; }
+.links a:hover { border-bottom-style: solid; }
+.note { font-size: 13.5px; color: var(--muted); border-left: 2px solid var(--accent); padding: 4px 0 4px 12px; margin: 16px 0; }
+
+/* ---------- cards grid ---------- */
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+#cad .cards { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.card { border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); overflow: hidden; display: flex; flex-direction: column;
+  transition: transform .3s, border-color .3s; }
+.card:hover { transform: translateY(-4px); border-color: #3a4554; }
+.card .cover { aspect-ratio: 16/10; overflow: hidden; background: #000; cursor: zoom-in; border: 0; padding: 0; width: 100%; }
+.cover-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); }
+.cover-pair .cover { aspect-ratio: 8/10; }
+.card .cover img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s; }
+.card .cover.fit { background: #454a52; }
+.card .cover.fit img { object-fit: contain; }
+.card:hover .cover img { transform: scale(1.05); }
+.card .body { padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.card h4 { font: 600 19px/1.25 var(--head); margin: 0; }
+.card p { font-size: 14.5px; color: #b5bdc9; margin: 0; }
+.card .chips { margin: auto 0 0; padding-top: 8px; }
+
+/* ---------- youtube lite ---------- */
+.yt { position: relative; aspect-ratio: 16/9; border: 0; padding: 0; width: 100%; cursor: pointer; background: #000; display: block; }
+.yt img { width: 100%; height: 100%; object-fit: cover; opacity: .75; transition: opacity .3s; }
+.yt:hover img { opacity: 1; }
+.yt .play { position: absolute; inset: 0; margin: auto; width: 72px; height: 50px; border-radius: 12px; background: var(--accent);
+  display: grid; place-items: center; box-shadow: 0 8px 30px rgba(0,0,0,.5); transition: transform .2s; }
+.yt:hover .play { transform: scale(1.08); }
+.yt .play::after { content: ""; border-left: 18px solid #111; border-top: 11px solid transparent; border-bottom: 11px solid transparent; margin-left: 4px; }
+.yt iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.cap { font: 12px var(--mono); color: var(--muted); padding: 8px 2px 0; }
+
+/* ---------- table ---------- */
+.tbl { width: 100%; border-collapse: collapse; font-size: 14px; margin: 16px 0; }
+.tbl th, .tbl td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); }
+.tbl th { font: 500 12px var(--mono); color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+.tbl td.num { font-family: var(--mono); text-align: right; }
+.tbl tr.hl td { color: var(--accent); }
+.bar { height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; min-width: 80px; }
+.bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-2)); width: 0; transition: width 1.2s cubic-bezier(.2,.7,.2,1); }
+.in .bar i { width: var(--w); }
+
+/* ---------- timeline ---------- */
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+.tl { list-style: none; margin: 0; padding: 0; }
+.tl li { display: grid; grid-template-columns: 120px 1fr; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+.tl .d { font: 12.5px var(--mono); color: var(--muted); padding-top: 3px; }
+.tl b { font-weight: 600; }
+.tl p { margin: 2px 0 0; font-size: 14.5px; color: #b5bdc9; }
+h3.sub { font: 600 14px var(--mono); color: var(--accent); text-transform: uppercase; letter-spacing: .08em; margin: 0 0 8px; }
+
+/* ---------- footer ---------- */
+footer { margin-top: 80px; border-top: 1px solid var(--line); padding: 64px 0; background: linear-gradient(180deg, transparent, var(--bg-2)); }
+.foot { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; }
+.foot h2 { font: 700 clamp(30px, 5vw, 56px)/1 var(--head); letter-spacing: -.03em; margin: 0 0 12px; }
+.foot small { color: var(--muted); font: 12px var(--mono); }
+
+/* ---------- lightbox ---------- */
+dialog.lb { border: 0; padding: 0; background: transparent; max-width: 94vw; max-height: 92vh; }
+dialog.lb::backdrop { background: rgba(5,7,10,.88); backdrop-filter: blur(6px); }
+dialog.lb img { max-width: 94vw; max-height: 84vh; border-radius: 10px; margin: auto; }
+dialog.lb figcaption { color: #c3c9d3; font: 13px var(--mono); text-align: center; padding: 12px; }
+dialog.lb button { position: fixed; top: 16px; right: 16px; width: 40px; height: 40px; border-radius: 50%; border: 1px solid #444;
+  background: #111; color: #fff; font-size: 20px; cursor: pointer; }
+
+/* ---------- reveal ---------- */
+.rv { opacity: 0; transform: translateY(28px); transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1); }
+.rv.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .rv { opacity: 1; transform: none; transition: none; }
+  .hero::before, .eyebrow .dot { animation: none; }
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 960px) {
+  .hero-grid, .project, .two { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .project.flip > .media { order: 0; }
+  .media { position: static; }
+  .cards { grid-template-columns: 1fr 1fr; }
+  .stats { grid-template-columns: 1fr 1fr; }
+  .sec-head { flex-wrap: wrap; }
+  .sec-head p { margin: 0; text-align: left; }
+}
+@media (max-width: 620px) {
+  .wrap, .nav-in { padding-left: 16px; padding-right: 16px; }
+  .with-banner .avatar { width: 96px; height: 96px; margin: -56px 0 16px 12px; }
+  .cards, .facts { grid-template-columns: minmax(0, 1fr); }
+  .tbl { font-size: 13px; }
+  .tbl th, .tbl td { padding: 8px 6px; }
+  .bento { grid-auto-rows: 70px; }
+  .tl li { grid-template-columns: 1fr; gap: 2px; }
+  section { padding-top: 72px; }
+}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+
+<nav id="nav">
+  <div class="nav-in">
+    <a class="brand" href="#top">yeonghun<b>.</b>lee</a>
+    <div class="nav-links">
+      <a href="#robotics">Robotics</a>
+      <a href="#research">Research</a>
+      <a href="#systems">Systems</a>
+      <a href="#cad">CAD</a>
+      <a href="#about">About</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+<script>if (new URLSearchParams(location.search).has('banner')) document.currentScript.parentNode.classList.add('with-banner');</script>
+  <div class="wrap">
+    <div class="banner rv"><img src="assets/banner.jpg" alt="" onerror="this.parentNode.remove()"></div>
+    <div class="hero-grid">
+      <div class="rv">
+        <img class="avatar" src="assets/me.jpg" alt="Yeonghun Lee" onerror="this.remove()">
+        <div class="eyebrow"><span class="dot"></span>Robot software · embedded control · learning</div>
+        <h1>Yeonghun<br><span class="grad">Lee</span></h1>
+        <p class="lede">CS graduate (Connecticut College '26). I build robots and the software that runs them:
+          <strong>imitation-learning policies on a real arm</strong>, <strong>servo drivers written from the bus protocol up</strong>,
+          the mechanical design of a <strong>transforming robot</strong> (team project), and <strong>neuroevolution</strong> research published at IEEE CoG.</p>
+        <div class="cta">
+          <a class="btn primary" href="#robotics">See the work
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg></a>
+          <a class="btn" href="https://github.com/asd417" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.04 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.62 1.58.23 2.75.11 3.04.74.81 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg>
+            asd417</a>
+          <a class="btn" href="mailto:loctitematt417@gmail.com">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+            Email</a>
+        </div>
+      </div>
+      <div class="bento rv">
+        <div class="tile t1"><img src="assets/smolvla/demo-poster.jpg" alt="SO-ARM101 workspace"><video data-auto muted loop playsinline preload="none" src="assets/smolvla/demo.mp4"></video><span class="tag">SmolVLA · SO-ARM101</span></div>
+        <div class="tile t2"><img src="assets/deceptacon/hero-with-robot.jpg" alt="Yeonghun holding the DECEPTACON spherical robot"><span class="tag">DECEPTACON · team build</span></div>
+        <div class="tile t3"><video data-auto muted loop playsinline preload="none" poster="assets/fruitfly/poster.jpg" src="assets/fruitfly/fruitfly.mp4"></video><span class="tag">fly flight · MuJoCo</span></div>
+        <div class="tile t4"><img src="assets/bagel/sponza-atrium.jpg" alt="Sponza atrium rendered in BagelEngine"><span class="tag">Vulkan engine</span></div>
+      </div>
+    </div>
+    <div class="stats rv">
+      <div class="stat"><b>IEEE <em>CoG</em> '25</b><span>Co-authored &amp; presented in Lisbon</span></div>
+      <div class="stat"><b>Rearden <em>Fellow</em></b><span>International travel fellowship, 2025</span></div>
+      <div class="stat"><b><em>2</em> research grants</b><span>CAP &amp; SSRI funded summers, 2024–25</span></div>
+      <div class="stat"><b>B.A. CS <em>'26</em></b><span>Connecticut College, honors thesis</span></div>
+    </div>
+  </div>
+</header>
+
+<main>
+<!-- ===================== ROBOTICS ===================== -->
+<section id="robotics">
+  <div class="wrap">
+    <div class="sec-head rv"><span class="sec-num">01</span><h2>Robotics</h2><p>Hardware I built or integrated, and the numbers I measured on it.</p></div>
+
+    <!-- SmolVLA -->
+    <article class="project">
+      <div class="media rv">
+        <div class="frame"><video controls muted playsinline preload="none" poster="assets/smolvla/demo-poster.jpg" src="assets/smolvla/demo.mp4"></video></div>
+        <div class="thumbs">
+          <button class="thumb" data-lb="assets/smolvla/stage_reached.png" data-cap="How far each of 20 trials got"><img src="assets/smolvla/stage_reached.png" alt="Stage reached per trial" loading="lazy"></button>
+          <button class="thumb" data-lb="assets/smolvla/failure_causes.png" data-cap="Failure causes across 18 failed trials"><img src="assets/smolvla/failure_causes.png" alt="Failure causes" loading="lazy"></button>
+          <button class="thumb" data-lb="assets/smolvla/control_rate.png" data-cap="Inference latency vs. chunk playback"><img src="assets/smolvla/control_rate.png" alt="Control rate" loading="lazy"></button>
+          <button class="thumb" data-lb="assets/smolvla/mode_probe.png" data-cap="Offline re-sampling: 32 noise seeds per decision point"><img src="assets/smolvla/mode_probe.png" alt="Mode probe" loading="lazy"></button>
+        </div>
+      </div>
+      <div class="rv">
+        <div class="kicker"><span class="when">2026</span><span>Imitation learning</span><span>Real robot</span></div>
+        <h3>SmolVLA pick-and-place on SO-ARM101</h3>
+        <p>Fine-tuned the SmolVLA vision-language-action policy to place two objects on a plate with a two-camera SO-ARM101.
+          I collected the demonstrations by teleoperation, trained on a laptop GPU, then ran a fixed evaluation protocol
+          on the real arm instead of stopping at “it worked once”.</p>
+        <div class="facts">
+          <div class="fact"><b>60k</b><span>training steps (~21 epochs), up from an epoch-starved first run</span></div>
+          <div class="fact"><b>79</b><span>teleoperated episodes, 57,519 frames</span></div>
+        </div>
+        <ol class="story">
+          <li><b>Dataset audit first.</b> The first runs were epoch-starved (≈1.4 epochs). Re-trained for 60k steps (~21 epochs).</li>
+          <li><b>Scored every failure.</b> 11 of 18 failures were gripper placement: a missed grasp or the jaw landing on the object.</li>
+          <li><b>Found a timing cause.</b> Generating a 50-step chunk took ~1.9 s with the arm frozen, then it played the chunk for another ~1.9 s without looking again. It saw the scene only once every ~3.8 s, so the control loop ran at 13 Hz instead of 26 Hz. This explains carrying an empty gripper to the plate: the grasp missed, but the arm didn’t see it until the next look.</li>
+          <li><b>Checked the noise.</b> Re-sampled the policy 32× per decision point offline. Apart from the first decision, samples stayed tightly grouped, so the failures weren’t sampling luck.</li>
+        </ol>
+        <ul class="chips"><li>LeRobot</li><li>SmolVLA</li><li>PyTorch</li><li>RTX 3080 Laptop</li><li>2× 720p cameras</li></ul>
+        <div class="links"><a href="https://github.com/asd417/arm_ws" target="_blank" rel="noopener">github / arm_ws →</a></div>
+      </div>
+    </article>
+
+    <!-- DECEPTACON -->
+    <article class="project flip">
+      <div class="media rv">
+        <div class="frame"><img src="assets/deceptacon/cad-ball.png" alt="DECEPTACON CAD, rolled up into a ball"></div>
+        <div class="thumbs">
+          <button class="thumb" data-lb="assets/deceptacon/leg-linkage-annotated.png" data-cap="Leg linkage with dimensions"><img src="assets/deceptacon/leg-linkage-annotated.png" alt="Annotated leg linkage" loading="lazy"></button>
+          <button class="thumb" data-lb="assets/deceptacon/cad-walker.png" data-cap="Walker form: legs deployed"><img src="assets/deceptacon/cad-walker.png" alt="Walker form CAD" loading="lazy"></button>
+          <button class="thumb" data-lb="assets/deceptacon/leg-mechanism.jpg" data-cap="Printed leg mechanism"><img src="assets/deceptacon/leg-mechanism.jpg" alt="Printed leg mechanism" loading="lazy"></button>
+          <button class="thumb" data-lb="assets/deceptacon/hero-with-robot.jpg" data-cap="The finished shell"><img src="assets/deceptacon/hero-with-robot.jpg" alt="Holding the finished robot" loading="lazy"></button>
+          <button class="thumb" data-lb="assets/deceptacon/whiteboard-sketch.jpg" data-cap="First sketch of the leg"><img src="assets/deceptacon/whiteboard-sketch.jpg" alt="Whiteboard sketch" loading="lazy"></button>
+          <button class="thumb" data-lb="assets/deceptacon/first-leg-print.jpg" data-cap="First printed leg"><img src="assets/deceptacon/first-leg-print.jpg" alt="First printed leg" loading="lazy"></button>
+          <button class="thumb" data-lb="assets/deceptacon/internals.jpg" data-cap="Chassis with servos and electronics"><img src="assets/deceptacon/internals.jpg" alt="Internals" loading="lazy"></button>
+          <button class="thumb" data-lb="assets/deceptacon/cad-topdown.png" data-cap="Top-down layout of the four legs"><img src="assets/deceptacon/cad-topdown.png" alt="Top-down CAD" loading="lazy"></button>
+        </div>
+      </div>
+      <div class="rv">
+        <div class="kicker"><span class="when">Spring 2026</span><span>Robotics course</span><span>Team project</span></div>
+        <h3>DECEPTACON: a robot that rolls up like an armadillo</h3>
+        <p>A team project: a sphere that unfolds into a four-legged walker. My part was <b>the mechanical design and fabrication</b>:
+          the CAD, every 3D print, print-quality and tolerance tests, and the bearing layout. My teammates built the electronics.</p>
+        <div class="facts">
+          <div class="fact"><b>12→8</b><span>servos after moving the legs into the shell</span></div>
+          <div class="fact"><b>4</b><span>legs that fold flush into the sphere</span></div>
+        </div>
+        <ol class="story">
+          <li><b>V1 leg</b>: Servobot-style with an extra retract joint. Too bulky: the motor had to travel out with the leg.</li>
+          <li><b>V2 leg</b>: the leg <em>is</em> a shell panel, and one servo swings it out. That's 2 servos per leg instead of 3.</li>
+          <li><b>Failure under gait loads</b>: the printed rods carrying the bearings snapped. I swapped them for metal bolts and spacers, but the bearings still popped out.</li>
+          <li><b>Lesson</b>: printed rods can't carry bearing loads. Seat the bearing in a housing that clamps it, and test the leg under walking loads before printing the whole body.</li>
+        </ol>
+        <ul class="chips"><li>Fusion 360</li><li>FDM printing</li><li>Linkage design</li><li>Bearings &amp; tolerances</li><li>MG996R servos</li></ul>
+      </div>
+    </article>
+
+    <!-- STS3215 -->
+    <article class="project">
+      <div class="media rv">
+        <div class="frame"><video data-auto controls muted loop playsinline preload="none" style="aspect-ratio:1" poster="assets/sts3215/uno-demo-poster.jpg" src="assets/sts3215/uno-demo.mp4" aria-label="Arduino Uno driving an STS3215 servo from an LCD menu"></video></div>
+      </div>
+      <div class="rv">
+        <div class="kicker"><span class="when">2026 · ongoing</span><span>Embedded</span><span>C++</span></div>
+        <h3>STS3215 servo driver, from the bus protocol up</h3>
+        <p>The SO-ARM101 runs on Feetech STS3215 serial-bus servos. Instead of calling the vendor SDK, I wrote the
+          driver myself: packet framing, checksums, register map and unit conversions. The core library is shared between
+          a Windows serial backend and the Arduino IDE.</p>
+        <ol class="story">
+          <li><b>Portable core</b>: plain C++11 compiled by both g++ and the Arduino toolchain. Platform I/O sits behind one backend.</li>
+          <li><b>Testable offline</b>: a simulated bus checks packets with no hardware attached.</li>
+          <li><b>On hardware</b>: ping, position read and write on a real servo. An Uno demo drives it from a 16×2 LCD menu, buttons and a pot.</li>
+          <li><b>Next</b>: error-path handling, a measured multi-servo read rate, and joystick-driven IK running on the Uno itself.</li>
+        </ol>
+        <ul class="chips"><li>C++11</li><li>UART half-duplex</li><li>Arduino</li><li>Win32 serial</li></ul>
+        <div class="links">
+          <a href="https://github.com/asd417/sts3215_control" target="_blank" rel="noopener">github / sts3215_control →</a>
+          <a href="https://github.com/asd417/arduino_sts3215_controller" target="_blank" rel="noopener">github / arduino controller →</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- ROS2 -->
+    <article class="project flip">
+      <div class="media rv">
+        <div class="frame"><img src="assets/ros2/ros2.png" alt="SO-ARM101 in simulation" loading="lazy"></div>
+      </div>
+      <div class="rv">
+        <div class="kicker"><span class="when">2026</span><span>ROS 2</span><span>Simulation</span></div>
+        <h3>SO-ARM101 in ROS 2, MuJoCo &amp; Gazebo</h3>
+        <p>A ROS 2 package for the arm that runs in both MuJoCo and Gazebo, with a camera slot added to the description.
+          I also added an <code>so101_mujoco</code> robot type to a fork of <code>lerobot-ros</code>, so LeRobot teleop
+          and policies can drive the simulated arm through its ROS controllers.</p>
+        <ul class="chips"><li>ROS 2</li><li>ros2_control</li><li>MuJoCo</li><li>Gazebo</li><li>URDF</li></ul>
+        <div class="links">
+          <a href="https://github.com/asd417/so_arm101_ros2" target="_blank" rel="noopener">github / so_arm101_ros2 →</a>
+          <a href="https://github.com/asd417/lerobot-ros" target="_blank" rel="noopener">github / lerobot-ros →</a>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ===================== RESEARCH ===================== -->
+<section id="research">
+  <div class="wrap">
+    <div class="sec-head rv"><span class="sec-num">02</span><h2>Research</h2><p>Autonomous Agent Learning Lab, Connecticut College · 2024–2026</p></div>
+
+    <!-- NeuroPAL -->
+    <article class="project">
+      <div class="media rv">
+        <button class="yt frame" data-yt="2sZ6j1X3Qzo" aria-label="Play NeuroPAL gameplay video">
+          <img src="assets/neuropal/thumbnail.jpg" alt="" loading="lazy"><span class="play"></span>
+        </button>
+        <div class="cap">The evolved macro bot playing StarCraft: Brood War</div>
+        <button class="thumb" style="aspect-ratio:auto" data-lb="assets/neuropal/neuropal-vs-neat.png" data-cap="Fitness vs. evaluations: Neuro-PAL vs. NEAT">
+          <img src="assets/neuropal/neuropal-vs-neat.png" alt="Neuro-PAL vs NEAT fitness curves" loading="lazy"></button>
+      </div>
+      <div class="rv">
+        <div class="kicker"><span class="when">IEEE CoG 2025</span><span>Publication</span><span>Presented in Lisbon</span></div>
+        <h3>NeuroPAL: neuroevolution for StarCraft macromanagement</h3>
+        <p>Combines NEAT with <b>Punctuated Anytime Learning</b>. A fast, loose evaluation steers evolution, and periodic
+          accurate evaluations correct it through fitness biasing. I implemented and evaluated the macromanagement agent,
+          and presented the paper at the IEEE Conference on Games in Lisbon (Rearden travel fellowship).</p>
+        <p class="note">O’Connor, J., <b>Lee, Y.</b>, &amp; Parker, G. B. (2025). NeuroPAL: Punctuated Anytime Learning with Neuroevolution for Macromanagement in Starcraft: Brood War. <i>IEEE CoG</i>, 1–7.</p>
+        <ul class="chips"><li>NEAT</li><li>Punctuated Anytime Learning</li><li>StarCraft: Brood War</li></ul>
+        <div class="links">
+          <a href="https://doi.org/10.1109/CoG64752.2025.11114200" target="_blank" rel="noopener">doi →</a>
+          <a href="https://arxiv.org/abs/2506.10384" target="_blank" rel="noopener">arXiv →</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Fruit fly -->
+    <article class="project flip">
+      <div class="media rv">
+        <div class="frame"><video controls muted loop playsinline preload="none" poster="assets/fruitfly/poster.jpg" src="assets/fruitfly/fruitfly.mp4"></video></div>
+        <button class="thumb" style="aspect-ratio:auto" data-lb="assets/fruitfly/fitness-chart.png" data-cap="Best fitness over 600 generations">
+          <img src="assets/fruitfly/fitness-chart.png" alt="Fitness over generations for four methods" loading="lazy"></button>
+      </div>
+      <div class="rv">
+        <div class="kicker"><span class="when">Summer 2025</span><span>SSRI grant</span><span>MuJoCo</span></div>
+        <h3>Evolving a fruit-fly flight controller</h3>
+        <p>Flight control for the anatomically detailed <i>Drosophila</i> model in MuJoCo (Vaxenburg et al., <i>Nature</i> 2025).
+          Instead of reinforcement learning, I evolved the controller networks and compared four methods.
+          The training ran in parallel Python processes.</p>
+        <table class="tbl">
+          <thead><tr><th>Method</th><th>Best fitness @ 600 gen</th><th></th></tr></thead>
+          <tbody>
+            <tr class="hl"><td>Neuro-PAL</td><td class="num">~155</td><td><div class="bar"><i style="--w:100%"></i></div></td></tr>
+            <tr><td>Recurrent NEAT</td><td class="num">~140</td><td><div class="bar"><i style="--w:90%"></i></div></td></tr>
+            <tr><td>Recurrent Neuro-PAL</td><td class="num">~130*</td><td><div class="bar"><i style="--w:84%"></i></div></td></tr>
+            <tr><td>NEAT</td><td class="num">~110</td><td><div class="bar"><i style="--w:71%"></i></div></td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:13px;color:var(--muted)">Initial results, read off the training curves. *Recurrent Neuro-PAL ran ~320 generations.</p>
+        <ul class="chips"><li>NEAT</li><li>Neuro-PAL</li><li>RNN</li><li>MuJoCo</li><li>multiprocessing</li></ul>
+      </div>
+    </article>
+
+    <!-- Thesis -->
+    <article class="project">
+      <div class="media rv">
+        <div class="frame"><img src="assets/thesis/sokoban-level.png" alt="A Boxoban level: push every box onto a goal" loading="lazy" style="image-rendering:pixelated"></div>
+        <button class="thumb" style="aspect-ratio:auto;background:#fff" data-lb="assets/thesis/results-table.png" data-cap="Table 6.1 from the thesis"><img src="assets/thesis/results-table.png" alt="Thesis results table" loading="lazy"></button>
+      </div>
+      <div class="rv">
+        <div class="kicker"><span class="when">Spring 2026</span><span>Honors thesis</span><span>Search + learning</span></div>
+        <h3>Neuroevolution of compact search heuristics in Sokoban</h3>
+        <p>Can evolution find a <b>tiny</b> learned heuristic that A* can use on unseen puzzles? I built a forward-BFS
+          trajectory generator with deadlock pruning to get exact cost-to-go labels, then trained NEAT and CoDeepNEAT heuristics
+          and compared them with Manhattan distance and a DeepCubeA-style CNN.</p>
+        <table class="tbl">
+          <thead><tr><th>Heuristic</th><th class="num">Params</th><th class="num">Solved / 294</th></tr></thead>
+          <tbody>
+            <tr><td>Manhattan distance</td><td class="num">0</td><td class="num">87.4%</td></tr>
+            <tr class="hl"><td>NEAT (9-config mean)</td><td class="num">~25</td><td class="num">83.9%</td></tr>
+            <tr><td>CoDeepNEAT</td><td class="num">263,361</td><td class="num">88.8%</td></tr>
+            <tr><td>CNN cost-to-go</td><td class="num">2,031,809</td><td class="num">100%</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:13px;color:var(--muted)">Held-out Boxoban medium levels, A* with a 100k-node budget. A ~25-weight network gets within 4 points of a hand-made baseline.</p>
+        <ul class="chips"><li>A*</li><li>NEAT</li><li>CoDeepNEAT</li><li>BFS</li><li>Boxoban</li></ul>
+      </div>
+    </article>
+
+    <div class="cards rv" style="margin-top:24px; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr))">
+      <div class="card">
+        <div class="cover-pair">
+          <button class="cover" data-lb="assets/chess/synthetic-render.png" data-cap="One of 2,001 auto-labelled Blender renders"><img src="assets/chess/synthetic-render.png" alt="Synthetic chess render" loading="lazy"></button>
+          <button class="cover" data-lb="assets/chess/knight-topology.png" data-cap="Knight retopology for the chess dataset"><img src="assets/chess/knight-topology.png" alt="Knight mesh topology" loading="lazy" style="object-position:50% 30%"></button>
+        </div>
+        <div class="body">
+          <div class="kicker"><span class="when">Fall 2024</span><span>Computer vision</span></div>
+          <h4>YOLOv8 on a synthetic chess dataset</h4>
+          <p>Modelled and retopologized the pieces in Blender and scripted randomized scenes that export their own bounding boxes:
+            2,001 renders, 18,990 boxes across 12 classes. Trained and evaluated YOLOv8 on the generated dataset.</p>
+          <ul class="chips"><li>Blender Python</li><li>YOLOv8</li><li>sim-to-real</li></ul>
+        </div>
+      </div>
+      <div class="card">
+        <div class="body">
+          <div class="kicker"><span>More lab work</span></div>
+          <h4>Other projects</h4>
+          <p><b>SCOPE</b> (Sparse Cosine Optimized Policy Evolution) on Atari Space Invaders (AIIDE 2025) and MicroRTS ·
+            <b>CMA-ES</b> predator–prey coevolution in Unity · cooperative <b>e-puck</b> coevolution in MuJoCo ·
+            <b>PuzzleJAX</b> contributions with Prof. Julian Togelius’s group at NYU.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="body">
+          <div class="kicker"><span>Behavior cloning</span></div>
+          <h4>FourierPilots: DFT input compression for behavior cloning</h4>
+          <p>Compressed the observation input of an xPilot behavior-cloning agent with a discrete Fourier transform, then swept compression and training parameters against accuracy.</p>
+          <div class="links">
+            <a href="fourierpilots.html">project page →</a>
+            <a href="https://github.com/asd417/FourierPilots" target="_blank" rel="noopener">github / FourierPilots →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SYSTEMS ===================== -->
+<section id="systems">
+  <div class="wrap">
+    <div class="sec-head rv"><span class="sec-num">03</span><h2>Systems</h2><p>Low-level C++ where performance and memory layout matter.</p></div>
+    <article class="project">
+      <div class="media rv">
+        <div class="frame"><img src="assets/bagel/sponza-atrium.jpg" alt="Sponza rendered in BagelEngine with colored point lights"></div>
+        <button class="thumb" style="aspect-ratio:auto" data-lb="assets/bagel/planet.png" data-cap="Procedural planet with a layered-noise editor"><img src="assets/bagel/planet.png" alt="Procedural planet with its noise-layer editor" loading="lazy"></button>
+      </div>
+      <div class="rv">
+        <div class="kicker"><span class="when">Nov 2023 → now</span><span>C++ · Vulkan</span></div>
+        <h3>BagelEngine: a Vulkan engine from scratch</h3>
+        <p>A 3D engine I started writing in November 2023 and keep coming back to. It started with batch rendering and an ECS and grew into PBR, physics and
+          procedural worlds. I document each step in a 30-entry devlog on the GitHub wiki.</p>
+        <ol class="story">
+          <li><b>Renderer</b>: bindless descriptors, indirect and instanced drawing, secondary command buffers, PBR with normal maps, cascaded shadows, bloom, SMAA.</li>
+          <li><b>Data-oriented core</b>: EnTT components laid out contiguously for cache-friendly iteration. Jolt physics.</li>
+          <li><b>Content</b>: glTF loading with skeletal animation, YAML scene files, a procedural planet generator with stacked noise layers.</li>
+          <li><b>Tooling</b>: an in-engine console, plus a remote console with an MCP server so an agent can drive the engine and take screenshots. The shots on this page were captured that way.</li>
+        </ol>
+        <ul class="chips"><li>C++</li><li>Vulkan</li><li>EnTT</li><li>Jolt</li><li>ImGui</li><li>GLSL</li></ul>
+        <div class="links">
+          <a href="https://github.com/asd417/BagelEngine" target="_blank" rel="noopener">github / BagelEngine →</a>
+          <a href="https://github.com/asd417/BagelEngine/wiki" target="_blank" rel="noopener">devlog →</a>
+          <a href="https://github.com/asd417/FlatBread" target="_blank" rel="noopener">FlatBread (2D, minimal deps) →</a>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ===================== CAD ===================== -->
+<section id="cad">
+  <div class="wrap">
+    <div class="sec-head rv"><span class="sec-num">04</span><h2>CAD &amp; fabrication</h2><p>Parts designed around real components, then printed and fitted.</p></div>
+    <div class="cards rv">
+      <div class="card">
+        <button class="cover" data-lb="assets/sff_case/case-front.jpg" data-cap="SFF case v2, printed and assembled"><img src="assets/sff_case/case-front.jpg" alt="Printed art-deco SFF PC case, assembled" loading="lazy"></button>
+        <div class="body">
+          <h4>Art-deco SFF PC case</h4>
+          <p>A small-form-factor PC case printed in 22 parts and designed around real GPU, PSU and fan models.
+            Two full iterations; v2 adds a printed internal frame.</p>
+          <ul class="chips"><li>Fusion 360</li><li>multi-part printing</li></ul>
+        </div>
+      </div>
+      <div class="card">
+        <button class="cover" data-lb="assets/camera-holder/printed.jpg" data-cap="Resin-printed adjustable camera mount"><img src="assets/camera-holder/printed.jpg" alt="Printed camera holder" loading="lazy"></button>
+        <div class="body">
+          <h4>Adjustable camera mount</h4>
+          <p>Resin-printed hinge mount for the SO-ARM101 workspace camera: M10 threads with 10° grooves set repeatable viewing angles.</p>
+          <ul class="chips"><li>resin printing</li><li>fixtures</li></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ABOUT ===================== -->
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head rv"><span class="sec-num">05</span><h2>About</h2></div>
+    <div class="two rv">
+      <div>
+        <h3 class="sub">Experience</h3>
+        <ul class="tl">
+          <li><span class="d">2024 – 2026</span><div><b>Student researcher</b>, Autonomous Agent Learning Lab<p>Neuroevolution, multi-agent coevolution and flight control. One IEEE CoG paper, one AIIDE contribution.</p></div></li>
+          <li><span class="d">Fall 2025</span><div><b>Teaching assistant</b>, Entertainment Software Design<p>Helped students build Unity games and ran a session on Git and GitHub.</p></div></li>
+          <li><span class="d">Fall 2025</span><div><b>Student system administrator</b>, CS Department<p>Department network infrastructure, backups and accounts.</p></div></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="sub">Education &amp; awards</h3>
+        <ul class="tl">
+          <li><span class="d">May 2026</span><div><b>B.A. Computer Science</b>, Connecticut College<p>Honors thesis in neuroevolution and search.</p></div></li>
+          <li><span class="d">Aug 2025</span><div><b>Rearden International Travel Fellowship</b><p>Travel to present at IEEE CoG 2025 in Lisbon.</p></div></li>
+          <li><span class="d">2024, 2025</span><div><b>CAP &amp; SSRI research grants</b><p>Two summers of funded research in the lab.</p></div></li>
+          <li><span class="d">TF2 mapping</span><div><b>1st place</b>, tf2maps “Connect 5” contest<p>Highwood, a payload map for Team Fortress 2.</p></div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div>
+      <h2>Let’s build robots.</h2>
+      <div class="cta">
+        <a class="btn primary" href="mailto:loctitematt417@gmail.com">loctitematt417@gmail.com</a>
+        <a class="btn" href="https://github.com/asd417" target="_blank" rel="noopener">github.com/asd417</a>
+      </div>
+    </div>
+    <small>© 2026 Yeonghun Lee · hand-written HTML, no framework</small>
+  </div>
+</footer>
+
+<dialog class="lb" id="lb">
+  <button aria-label="Close" id="lb-x">×</button>
+  <figure style="margin:0"><img id="lb-img" alt=""><figcaption id="lb-cap"></figcaption></figure>
+</dialog>
+
+<script>
+// Reveal on scroll, plus play muted loops only while visible.
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+}), { threshold: .12 });
+document.querySelectorAll('.rv').forEach(el => io.observe(el));
+
+const vio = new IntersectionObserver(es => es.forEach(e => {
+  const v = e.target;
+  if (e.isIntersecting && !reduce) v.play().catch(() => {}); else v.pause();
+}), { threshold: .25 });
+document.querySelectorAll('video[data-auto]').forEach(v => vio.observe(v));
+
+// Lightbox via native <dialog>.
+const lb = document.getElementById('lb'), lbImg = document.getElementById('lb-img'), lbCap = document.getElementById('lb-cap');
+document.addEventListener('click', e => {
+  const t = e.target.closest('[data-lb]');
+  if (t) { lbImg.src = t.dataset.lb; lbImg.alt = lbCap.textContent = t.dataset.cap || ''; lb.showModal(); return; }
+  const y = e.target.closest('[data-yt]');
+  if (y && !y.querySelector('iframe')) {
+    y.insertAdjacentHTML('beforeend', `<iframe src="https://www.youtube-nocookie.com/embed/${y.dataset.yt}?autoplay=1" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen title="YouTube video"></iframe>`);
+  }
+});
+document.getElementById('lb-x').onclick = () => lb.close();
+lb.addEventListener('click', e => { if (e.target === lb) lb.close(); });
+
+// Nav: border when scrolled, progress bar, active section.
+const nav = document.getElementById('nav'), bar = document.getElementById('progress');
+const links = [...document.querySelectorAll('.nav-links a')];
+const secs = links.map(a => document.querySelector(a.getAttribute('href')));
+addEventListener('scroll', () => {
+  const y = scrollY, h = document.documentElement.scrollHeight - innerHeight;
+  nav.classList.toggle('scrolled', y > 8);
+  bar.style.transform = `scaleX(${h > 0 ? y / h : 0})`;
+  let i = secs.findLastIndex(s => s.getBoundingClientRect().top < innerHeight * .35);
+  links.forEach((a, j) => a.classList.toggle('active', j === i));
+}, { passive: true });
+</script>
+</body>
+</html>

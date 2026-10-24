@@ -1,0 +1,201 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FourierPilots · Yeonghun Lee</title>
+<meta name="description" content="Compressing xPilot observations with FFT and DCT before behavior cloning: method, results and parameter sweeps.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ponytail: tokens copied from index.html; keep the two in sync by hand */
+:root {
+  --bg: #0a0c0f;
+  --bg-2: #10141a;
+  --card: #131820;
+  --line: #222a35;
+  --text: #e6e9ee;
+  --muted: #8a94a3;
+  --accent: #ff8a3d;
+  --accent-2: #4cc9f0;
+  --radius: 14px;
+  --max: 1180px;
+  --mono: "JetBrains Mono", ui-monospace, monospace;
+  --head: "Space Grotesk", "Inter", system-ui, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.65 "Inter", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+img { display: block; max-width: 100%; }
+a { color: inherit; }
+
+nav { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  background: color-mix(in srgb, var(--bg) 72%, transparent); border-bottom: 1px solid var(--line); }
+.nav-in { max-width: var(--max); margin: auto; padding: 14px 24px; display: flex; align-items: center; gap: 24px; }
+.brand { font: 600 15px var(--mono); text-decoration: none; }
+.brand b { color: var(--accent); }
+.nav-links { display: flex; gap: 4px; margin-left: auto; overflow-x: auto; scrollbar-width: none; }
+.nav-links a { font-size: 14px; color: var(--muted); text-decoration: none; padding: 6px 12px; border-radius: 999px; white-space: nowrap; }
+.nav-links a:hover { color: var(--text); }
+
+.wrap { max-width: var(--max); margin: auto; padding: 0 24px; }
+section { padding: 56px 0 8px; }
+.kicker { font: 500 12px var(--mono); color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+.kicker b { color: var(--accent); font-weight: 500; }
+h1 { font: 700 clamp(32px, 5vw, 56px)/1.08 var(--head); letter-spacing: -.03em; margin: 14px 0 18px; max-width: 18em; }
+h2 { font: 700 clamp(24px, 3vw, 32px)/1.15 var(--head); letter-spacing: -.02em; margin: 0 0 20px; }
+h3 { font: 500 13px var(--mono); color: var(--muted); letter-spacing: .04em; margin: 0 0 10px; }
+p, li { color: #c3c9d3; }
+.lede { font-size: 19px; max-width: 40em; margin: 0 0 24px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 24px; padding: 0; list-style: none; }
+.chips li { font: 500 12px var(--mono); padding: 4px 10px; border: 1px solid var(--line); border-radius: 999px; color: #b5bdc9; }
+.links { display: flex; flex-wrap: wrap; gap: 14px; }
+.links a { font: 500 13px var(--mono); text-decoration: none; color: var(--accent); border-bottom: 1px dashed color-mix(in srgb, var(--accent) 50%, transparent); }
+.links a:hover { border-bottom-style: solid; }
+
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; }
+.card p { margin: 0 0 12px; }
+.card p:last-child { margin: 0; }
+.results { margin: 0; padding-left: 20px; }
+.results li { margin-bottom: 8px; }
+.results b { color: var(--text); font-weight: 600; }
+
+/* plots are white matplotlib PNGs: give them a light mat so they read as figures, not holes */
+.fig { display: block; text-decoration: none; }
+.fig .mat { background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 8px; transition: transform .2s; }
+.fig:hover .mat { transform: translateY(-2px); }
+.fig img { width: 100%; height: auto; }
+.fig span { display: block; font: 500 12px var(--mono); color: var(--muted); margin-top: 8px; }
+.grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-bottom: 32px; }
+.row-label { font: 500 12px var(--mono); color: var(--accent-2); letter-spacing: .06em; text-transform: uppercase; margin: 0 0 12px; }
+
+footer { padding: 56px 0 64px; color: var(--muted); font-size: 14px; }
+
+@media (max-width: 900px) {
+  .two { grid-template-columns: 1fr; }
+  .grid3 { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 560px) {
+  .wrap, .nav-in { padding-left: 16px; padding-right: 16px; }
+  .grid3 { grid-template-columns: 1fr; }
+  .nav-links a:not(:first-child) { display: none; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-in">
+    <a class="brand" href="index.html">yeonghun<b>.</b>lee</a>
+    <div class="nav-links">
+      <a href="index.html#research">← Portfolio</a>
+      <a href="#method">Method</a>
+      <a href="#results">Results</a>
+      <a href="#sweeps">Sweeps</a>
+      <a href="#refs">References</a>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+  <section>
+    <div class="kicker"><b>FourierPilots</b> · behavior cloning</div>
+    <h1>Improving behavior cloning of an xPilot agent with the discrete Fourier transform</h1>
+    <p class="lede">Prior work shows signal-processing transforms inside neural networks can improve the overall agent.
+      This project applies that idea to a behavior-cloning agent for xPilot.</p>
+    <ul class="chips"><li>Discrete Fourier Transform</li><li>DCT</li><li>Behavior cloning</li><li>Signal processing</li></ul>
+    <div class="links">
+      <a href="https://github.com/asd417/FourierPilots" target="_blank" rel="noopener">github / FourierPilots →</a>
+      <a href="https://docs.google.com/presentation/d/15lyiyQ9oN-WPlP_Air3ec0WjYOv_LwLVqK8jrJwvwDQ/edit?usp=sharing" target="_blank" rel="noopener">slides →</a>
+    </div>
+  </section>
+
+  <section id="method">
+    <div class="two">
+      <div class="card">
+        <h2>Method</h2>
+        <p>High-dimensional observations from the xPilot environment are compressed with a Fast Fourier Transform (FFT)
+          or Discrete Cosine Transform (DCT) before reaching a neural-network controller.</p>
+        <p>The controller is trained by behavior cloning on data generated by a rule-based agent. A baseline network
+          trained on uncompressed observations is the comparison. Both are evaluated on accuracy and validation loss.</p>
+      </div>
+      <div class="card" id="results">
+        <h2>Results</h2>
+        <ul class="results">
+          <li>On <b>time-series</b> data, <b>MLPCosineTime</b> (a single DCT) outperformed every other signal-processing variant.</li>
+          <li>On <b>independent</b> data, <b>MLPDoubleCosineTime</b> (a double DCT) outperformed every other signal-processing variant.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Overall accuracy</h2>
+    <div class="two">
+      <a class="fig" href="https://github.com/asd417/FourierPilots/blob/main/outcome/timed/acc_overall.png?raw=true" target="_blank" rel="noopener">
+        <div class="mat"><img src="https://github.com/asd417/FourierPilots/blob/main/outcome/timed/acc_overall.png?raw=true" alt="Overall accuracy per model on time-series data" loading="lazy" width="800" height="500"></div>
+        <span>Time-series data</span>
+      </a>
+      <a class="fig" href="https://github.com/asd417/FourierPilots/blob/main/outcome/independent/acc_overall.png?raw=true" target="_blank" rel="noopener">
+        <div class="mat"><img src="https://github.com/asd417/FourierPilots/blob/main/outcome/independent/acc_overall.png?raw=true" alt="Overall accuracy per model on independent data" loading="lazy" width="800" height="500"></div>
+        <span>Independent data</span>
+      </a>
+    </div>
+  </section>
+
+  <section id="sweeps">
+    <h2>Parameter sweeps</h2>
+    <p class="row-label">Time-series data</p>
+    <div class="grid3">
+      <a class="fig" href="https://github.com/asd417/FourierPilots/blob/main/outcome/timed/acc_vs_b.png?raw=true" target="_blank" rel="noopener">
+        <div class="mat"><img src="https://github.com/asd417/FourierPilots/blob/main/outcome/timed/acc_vs_b.png?raw=true" alt="Accuracy vs data size, time-series" loading="lazy" width="900" height="500"></div>
+        <span>Data size</span>
+      </a>
+      <a class="fig" href="https://github.com/asd417/FourierPilots/blob/main/outcome/timed/acc_vs_lr.png?raw=true" target="_blank" rel="noopener">
+        <div class="mat"><img src="https://github.com/asd417/FourierPilots/blob/main/outcome/timed/acc_vs_lr.png?raw=true" alt="Accuracy vs learning rate, time-series" loading="lazy" width="900" height="500"></div>
+        <span>Learning rate</span>
+      </a>
+      <a class="fig" href="https://github.com/asd417/FourierPilots/blob/main/outcome/timed/acc_vs_h.png?raw=true" target="_blank" rel="noopener">
+        <div class="mat"><img src="https://github.com/asd417/FourierPilots/blob/main/outcome/timed/acc_vs_h.png?raw=true" alt="Accuracy vs hidden layer size, time-series" loading="lazy" width="900" height="500"></div>
+        <span>Hidden layer size</span>
+      </a>
+    </div>
+    <p class="row-label">Independent data</p>
+    <div class="grid3">
+      <a class="fig" href="https://github.com/asd417/FourierPilots/blob/main/outcome/independent/acc_vs_b.png?raw=true" target="_blank" rel="noopener">
+        <div class="mat"><img src="https://github.com/asd417/FourierPilots/blob/main/outcome/independent/acc_vs_b.png?raw=true" alt="Accuracy vs data size, independent" loading="lazy" width="900" height="500"></div>
+        <span>Data size</span>
+      </a>
+      <a class="fig" href="https://github.com/asd417/FourierPilots/blob/main/outcome/independent/acc_vs_lr.png?raw=true" target="_blank" rel="noopener">
+        <div class="mat"><img src="https://github.com/asd417/FourierPilots/blob/main/outcome/independent/acc_vs_lr.png?raw=true" alt="Accuracy vs learning rate, independent" loading="lazy" width="900" height="500"></div>
+        <span>Learning rate</span>
+      </a>
+      <a class="fig" href="https://github.com/asd417/FourierPilots/blob/main/outcome/independent/acc_vs_h.png?raw=true" target="_blank" rel="noopener">
+        <div class="mat"><img src="https://github.com/asd417/FourierPilots/blob/main/outcome/independent/acc_vs_h.png?raw=true" alt="Accuracy vs hidden layer size, independent" loading="lazy" width="900" height="500"></div>
+        <span>Hidden layer size</span>
+      </a>
+    </div>
+    <p class="kicker" style="text-transform:none">Click any plot to open it full size.</p>
+  </section>
+
+  <section id="refs">
+    <div class="two">
+      <div class="card">
+        <h2>References</h2>
+        <p>Lee-Thorp, James, et al. <em>FNet: Mixing tokens with Fourier transforms.</em> Proceedings of the 2022
+          Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies. 2022.</p>
+      </div>
+      <div class="card">
+        <h2>Acknowledgments</h2>
+        <p>Yeonghun Lee, B.A. Computer Science, Connecticut College.</p>
+        <p>Advised by Prof. Gary B. Parker and Jim O'Connor (Autonomous Agent Learning Lab).</p>
+      </div>
+    </div>
+  </section>
+
+  <footer><div class="links"><a href="index.html#research">← Back to portfolio</a></div></footer>
+</main>
+</body>
+</html>

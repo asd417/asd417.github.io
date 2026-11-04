@@ -84,8 +84,7 @@ section { padding: 96px 0 40px; }
   box-shadow: 0 0 0 0 var(--ok); animation: pulse 2.4s infinite; vertical-align: 1px; }
 @keyframes pulse { 70% { box-shadow: 0 0 0 10px transparent; } }
 h1 { font: 700 clamp(44px, 7vw, 84px)/1 var(--head); letter-spacing: -.035em; margin: 18px 0 20px; }
-h1 .grad { background: linear-gradient(100deg, var(--text) 30%, var(--accent) 75%, var(--accent-2));
-  -webkit-background-clip: text; background-clip: text; color: transparent; }
+h1 .grad { color: color-mix(in srgb, var(--text) 75%, var(--accent)); }
 .lede { font-size: 19px; color: #c3c9d3; max-width: 34em; margin: 0 0 28px; }
 .lede strong { color: var(--text); font-weight: 600; }
 .cta { display: flex; flex-wrap: wrap; gap: 12px; }

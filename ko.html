@@ -332,7 +332,7 @@ body { font-family: "Inter", "Noto Sans KR", system-ui, sans-serif; word-break: 
         <h3>SO-ARM101로 SmolVLA 픽앤플레이스</h3>
         <p>카메라 두 대를 장착한 SO-ARM101이 물체 두 개를 접시에 옮기도록 SmolVLA(비전-언어-행동 정책)를 파인튜닝했습니다.
           시연 데이터는 텔레오퍼레이션으로 직접 수집했고, 학습은 노트북 GPU에서 진행했습니다.
-          단발성 성공에 그치지 않고, 사전에 정한 평가 절차에 따라 실제 로봇팔에서 반복 평가했습니다.</p>
+          사전에 정한 평가 절차에 따라 실제 로봇팔에서 20회 평가했습니다.</p>
         <div class="facts">
           <div class="fact"><b>60k</b><span>학습 스텝(약 21 에폭). 초기 학습은 에폭 부족</span></div>
           <div class="fact"><b>79</b><span>텔레오퍼레이션 에피소드, 57,519 프레임</span></div>
@@ -464,34 +464,8 @@ body { font-family: "Inter", "Noto Sans KR", system-ui, sans-serif; word-break: 
       </div>
     </article>
 
-    <!-- Thesis -->
-    <article class="project flip">
-      <div class="media rv">
-        <div class="frame"><img src="assets/thesis/sokoban-level.png" alt="Boxoban 레벨: 모든 상자를 목표 칸으로 밀기" loading="lazy" style="image-rendering:pixelated"></div>
-        <button class="thumb" style="aspect-ratio:auto;background:#fff" data-lb="assets/thesis/results-table.png" data-cap="논문의 표 6.1"><img src="assets/thesis/results-table.png" alt="논문 결과 표" loading="lazy"></button>
-      </div>
-      <div class="rv">
-        <div class="kicker"><span class="when">2026 봄</span><span>아너 논문</span><span>탐색 + 학습</span></div>
-        <h3>신경진화를 이용한 소형 소코반 탐색 휴리스틱</h3>
-        <p>진화로 찾은 <b>초소형</b> 학습 휴리스틱을 처음 보는 퍼즐의 A* 탐색에 활용할 수 있는지 검증한 연구입니다.
-          정확한 cost-to-go 라벨을 얻기 위해 데드락 가지치기를 적용한 순방향 BFS 궤적 생성기를 구현했고,
-          NEAT·CoDeepNEAT 휴리스틱을 학습시켜 맨해튼 거리 및 DeepCubeA 방식 CNN과 비교했습니다.</p>
-        <table class="tbl">
-          <thead><tr><th>휴리스틱</th><th class="num">파라미터</th><th class="num">해결 / 294</th></tr></thead>
-          <tbody>
-            <tr><td>맨해튼 거리</td><td class="num">0</td><td class="num">87.4%</td></tr>
-            <tr><td>NEAT (설정 9개 평균)</td><td class="num">~25</td><td class="num">83.9%</td></tr>
-            <tr class="hl"><td>CoDeepNEAT</td><td class="num">263,361</td><td class="num">88.8%</td></tr>
-            <tr><td>CNN cost-to-go</td><td class="num">2,031,809</td><td class="num">100%</td></tr>
-          </tbody>
-        </table>
-        <p style="font-size:13px;color:var(--muted)">학습에 사용하지 않은 Boxoban medium 레벨, 노드 10만 개 제한 A*. 가중치 약 25개의 NEAT genome은 목표 채널을 거의 활용하지 못해 상자–목표 거리를 추정할 수 없었고, 설정 9개 모두 맨해튼 거리에 미달했습니다. 기준선을 넘은 것은 경사하강법으로 가중치를 학습한 CoDeepNEAT뿐입니다.</p>
-        <ul class="chips"><li>A*</li><li>NEAT</li><li>CoDeepNEAT</li><li>BFS</li><li>Boxoban</li></ul>
-      </div>
-    </article>
-
     <!-- Fruit fly -->
-    <article class="project">
+    <article class="project flip">
       <div class="media rv">
         <div class="frame"><video controls muted loop playsinline preload="none" poster="assets/fruitfly/poster.jpg" src="assets/fruitfly/fruitfly.mp4"></video></div>
         <button class="thumb" style="aspect-ratio:auto" data-lb="assets/fruitfly/fitness-chart.png" data-cap="600세대 동안의 최고 적합도">
@@ -643,13 +617,13 @@ body { font-family: "Inter", "Noto Sans KR", system-ui, sans-serif; word-break: 
 <footer>
   <div class="wrap foot">
     <div>
-      <h2>로봇, 같이 만들어요.</h2>
+      <h2>연락처</h2>
       <div class="cta">
         <a class="btn primary" href="mailto:loctitematt417@gmail.com">loctitematt417@gmail.com</a>
         <a class="btn" href="https://github.com/asd417" target="_blank" rel="noopener">github.com/asd417</a>
       </div>
     </div>
-    <small>© 2026 이영훈 · 프레임워크 없이 작성한 HTML</small>
+    <small>© 2026 이영훈</small>
   </div>
 </footer>
 

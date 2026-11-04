@@ -309,7 +309,7 @@ dialog.lb button { position: fixed; top: 16px; right: 16px; width: 40px; height:
 <!-- ===================== ROBOTICS ===================== -->
 <section id="robotics">
   <div class="wrap">
-    <div class="sec-head rv"><span class="sec-num">01</span><h2>Robotics</h2><p>Hardware I built or integrated, and the numbers I measured on it.</p></div>
+    <div class="sec-head rv"><span class="sec-num">01</span><h2>Robotics</h2><p>Hardware I built or integrated, with measured results.</p></div>
 
     <!-- SmolVLA -->
     <article class="project">
@@ -328,8 +328,8 @@ dialog.lb button { position: fixed; top: 16px; right: 16px; width: 40px; height:
         <div class="kicker"><span class="when">2026</span><span>Imitation learning</span><span>Real robot</span></div>
         <h3>SmolVLA pick-and-place on SO-ARM101</h3>
         <p>Fine-tuned the SmolVLA vision-language-action policy to place two objects on a plate with a two-camera SO-ARM101.
-          I collected the demonstrations by teleoperation, trained on a laptop GPU, then ran a fixed evaluation protocol
-          on the real arm instead of stopping at “it worked once”.</p>
+          I collected the demonstrations by teleoperation, trained on a laptop GPU, then scored it on the real arm
+          over 20 trials with a fixed protocol.</p>
         <div class="facts">
           <div class="fact"><b>60k</b><span>training steps (~21 epochs), up from an epoch-starved first run</span></div>
           <div class="fact"><b>79</b><span>teleoperated episodes, 57,519 frames</span></div>
@@ -487,34 +487,8 @@ dialog.lb button { position: fixed; top: 16px; right: 16px; width: 40px; height:
       </div>
     </article>
 
-    <!-- Thesis -->
-    <article class="project flip">
-      <div class="media rv">
-        <div class="frame"><img src="assets/thesis/sokoban-level.png" alt="A Boxoban level: push every box onto a goal" loading="lazy" style="image-rendering:pixelated"></div>
-        <button class="thumb" style="aspect-ratio:auto;background:#fff" data-lb="assets/thesis/results-table.png" data-cap="Table 6.1 from the thesis"><img src="assets/thesis/results-table.png" alt="Thesis results table" loading="lazy"></button>
-      </div>
-      <div class="rv">
-        <div class="kicker"><span class="when">Spring 2026</span><span>Honors thesis</span><span>Search + learning</span></div>
-        <h3>Neuroevolution of compact search heuristics in Sokoban</h3>
-        <p>Can evolution find a <b>tiny</b> learned heuristic that A* can use on unseen puzzles? I built a forward-BFS
-          trajectory generator with deadlock pruning to get exact cost-to-go labels, then trained NEAT and CoDeepNEAT heuristics
-          and compared them with Manhattan distance and a DeepCubeA-style CNN.</p>
-        <table class="tbl">
-          <thead><tr><th>Heuristic</th><th class="num">Params</th><th class="num">Solved / 294</th></tr></thead>
-          <tbody>
-            <tr><td>Manhattan distance</td><td class="num">0</td><td class="num">87.4%</td></tr>
-            <tr><td>NEAT (9-config mean)</td><td class="num">~25</td><td class="num">83.9%</td></tr>
-            <tr class="hl"><td>CoDeepNEAT</td><td class="num">263,361</td><td class="num">88.8%</td></tr>
-            <tr><td>CNN cost-to-go</td><td class="num">2,031,809</td><td class="num">100%</td></tr>
-          </tbody>
-        </table>
-        <p style="font-size:13px;color:var(--muted)">Held-out Boxoban medium levels, A* with a 100k-node budget. The ~25-weight NEAT genome barely reads the goal channel, so it can’t estimate box-to-goal distance and falls below Manhattan in all 9 configs. Only CoDeepNEAT, with gradient-trained weights, clears it.</p>
-        <ul class="chips"><li>A*</li><li>NEAT</li><li>CoDeepNEAT</li><li>BFS</li><li>Boxoban</li></ul>
-      </div>
-    </article>
-
     <!-- Fruit fly -->
-    <article class="project">
+    <article class="project flip">
       <div class="media rv">
         <div class="frame"><video controls muted loop playsinline preload="none" poster="assets/fruitfly/poster.jpg" src="assets/fruitfly/fruitfly.mp4"></video></div>
         <button class="thumb" style="aspect-ratio:auto" data-lb="assets/fruitfly/fitness-chart.png" data-cap="Best fitness over 600 generations">
@@ -666,13 +640,13 @@ dialog.lb button { position: fixed; top: 16px; right: 16px; width: 40px; height:
 <footer>
   <div class="wrap foot">
     <div>
-      <h2>Let’s build robots.</h2>
+      <h2>Contact</h2>
       <div class="cta">
         <a class="btn primary" href="mailto:loctitematt417@gmail.com">loctitematt417@gmail.com</a>
         <a class="btn" href="https://github.com/asd417" target="_blank" rel="noopener">github.com/asd417</a>
       </div>
     </div>
-    <small>© 2026 Yeonghun Lee · hand-written HTML, no framework</small>
+    <small>© 2026 Yeonghun Lee</small>
   </div>
 </footer>
 

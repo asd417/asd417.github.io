@@ -278,9 +278,9 @@ body { font-family: "Inter", "Noto Sans KR", system-ui, sans-serif; word-break: 
         <img class="avatar" src="assets/me.jpg" alt="이영훈" onerror="this.remove()">
         <div class="eyebrow"><span class="dot"></span>로봇 소프트웨어 · 임베디드 제어 · 로봇 학습</div>
         <h1><span class="grad">이영훈</span></h1>
-        <p class="lede">미국 코네티컷 칼리지에서 컴퓨터과학을 전공했습니다(2026년 졸업). 로봇을 직접 만들고, 그 위에서 돌아가는 소프트웨어를 짭니다.
-          <strong>실제 로봇팔에 올린 모방학습 정책</strong>, <strong>통신 프로토콜부터 직접 짠 서보 드라이버</strong>,
-          공처럼 말리는 <strong>변신 로봇의 기구 설계</strong>(팀 프로젝트), IEEE CoG에서 발표한 <strong>신경진화 연구</strong>를 이 페이지에 모았습니다.</p>
+        <p class="lede">미국 코네티컷 칼리지 컴퓨터과학과를 2026년에 졸업했습니다. 로봇 하드웨어를 직접 제작하고, 그 위에서 동작하는 소프트웨어를 개발합니다.
+          <strong>실제 로봇팔에 적용한 모방학습 정책</strong>, <strong>통신 프로토콜부터 직접 구현한 서보 드라이버</strong>,
+          구형으로 변형되는 <strong>변신 로봇의 기구 설계</strong>(팀 프로젝트), IEEE CoG에서 발표한 <strong>신경진화 연구</strong>를 소개합니다.</p>
         <div class="cta">
           <a class="btn primary" href="#robotics">작업 보기
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg></a>
@@ -312,14 +312,14 @@ body { font-family: "Inter", "Noto Sans KR", system-ui, sans-serif; word-break: 
 <!-- ===================== ROBOTICS ===================== -->
 <section id="robotics">
   <div class="wrap">
-    <div class="sec-head rv"><span class="sec-num">01</span><h2>로보틱스</h2><p>직접 만들거나 붙여서 돌려 본 하드웨어, 그리고 거기서 잰 숫자들.</p></div>
+    <div class="sec-head rv"><span class="sec-num">01</span><h2>로보틱스</h2><p>직접 제작하거나 통합한 하드웨어와 그 측정 결과.</p></div>
 
     <!-- SmolVLA -->
     <article class="project">
       <div class="media rv">
         <div class="frame"><video controls muted playsinline preload="none" poster="assets/smolvla/demo-poster.jpg" src="assets/smolvla/demo.mp4"></video></div>
         <div class="thumbs">
-          <button class="thumb" data-lb="assets/smolvla/stage_reached.png" data-cap="시행 20회가 각각 어느 단계까지 갔는지"><img src="assets/smolvla/stage_reached.png" alt="시행별 도달 단계" loading="lazy"></button>
+          <button class="thumb" data-lb="assets/smolvla/stage_reached.png" data-cap="시행 20회의 단계별 도달 결과"><img src="assets/smolvla/stage_reached.png" alt="시행별 도달 단계" loading="lazy"></button>
           <button class="thumb" data-lb="assets/smolvla/failure_causes.png" data-cap="실패 18회의 원인"><img src="assets/smolvla/failure_causes.png" alt="실패 원인" loading="lazy"></button>
           <button class="thumb" data-lb="assets/smolvla/control_rate.png" data-cap="추론 지연과 청크 재생 시간"><img src="assets/smolvla/control_rate.png" alt="제어 주기" loading="lazy"></button>
           <button class="thumb" data-lb="assets/smolvla/mode_probe.png" data-cap="오프라인 재샘플링: 판단 시점마다 노이즈 시드 32개"><img src="assets/smolvla/mode_probe.png" alt="모드 확인" loading="lazy"></button>
@@ -330,16 +330,16 @@ body { font-family: "Inter", "Noto Sans KR", system-ui, sans-serif; word-break: 
       <div class="rv">
         <div class="kicker"><span class="when">2026</span><span>모방학습</span><span>실제 로봇</span></div>
         <h3>SO-ARM101로 SmolVLA 픽앤플레이스</h3>
-        <p>카메라 두 대를 단 SO-ARM101이 물체 두 개를 접시에 옮기도록 SmolVLA(비전-언어-행동 정책)를 파인튜닝했습니다.
-          시연 데이터는 텔레오퍼레이션으로 직접 모았고 학습은 노트북 GPU로 돌렸습니다.
-          “한 번 됐다”에서 끝내지 않고, 미리 정한 평가 절차대로 실제 로봇팔에서 다시 돌려 봤습니다.</p>
+        <p>카메라 두 대를 장착한 SO-ARM101이 물체 두 개를 접시에 옮기도록 SmolVLA(비전-언어-행동 정책)를 파인튜닝했습니다.
+          시연 데이터는 텔레오퍼레이션으로 직접 수집했고, 학습은 노트북 GPU에서 진행했습니다.
+          단발성 성공에 그치지 않고, 사전에 정한 평가 절차에 따라 실제 로봇팔에서 반복 평가했습니다.</p>
         <div class="facts">
-          <div class="fact"><b>60k</b><span>학습 스텝(약 21 에폭). 첫 학습은 에폭이 한참 모자랐음</span></div>
+          <div class="fact"><b>60k</b><span>학습 스텝(약 21 에폭). 초기 학습은 에폭 부족</span></div>
           <div class="fact"><b>79</b><span>텔레오퍼레이션 에피소드, 57,519 프레임</span></div>
         </div>
         <ol class="story">
-          <li><b>학습 설정 ablation.</b> 학습률, 배치, 스텝을 하나씩 바꿔 비교했습니다. 같은 3.48 에폭에서 lr 1e-5는 loss 0.187, 1e-4는 0.089로 끝나서 1e-4로 되돌렸습니다.
-            20k run 두 개는 run의 71–72% 지점에서 loss가 평평해졌습니다. 60k run은 그 지점을 지나서도 0.022까지 내려갔습니다. 병목은 설정이 아니라 에폭이었습니다.
+          <li><b>학습 설정 비교 실험.</b> 학습률, 배치 크기, 스텝 수를 하나씩 바꿔 비교했습니다. 동일한 3.48 에폭에서 최종 loss는 lr 1e-5가 0.187, 1e-4가 0.089였으므로 1e-4로 복귀했습니다.
+            20k 스텝 run 두 개는 전체의 71–72% 지점에서 loss가 정체되었으나, 60k run은 해당 지점 이후에도 0.022까지 감소했습니다. 병목은 하이퍼파라미터가 아니라 학습량(에폭)이었습니다.
             <table class="tbl">
               <thead><tr><th>Run</th><th class="num">최대 LR</th><th class="num">에폭</th><th class="num">Loss</th><th class="num">성공</th></tr></thead>
               <tbody>
@@ -349,10 +349,10 @@ body { font-family: "Inter", "Noto Sans KR", system-ui, sans-serif; word-break: 
                 <tr class="hl"><td>b20 · 60k</td><td class="num">1e-4</td><td class="num">20.86</td><td class="num">0.022</td><td class="num">2/20</td></tr>
               </tbody>
             </table>
-            <span style="display:block;font-size:13px;color:var(--muted)">배치 · 스텝. cosine decay, warmup 1,000 스텝(b8은 666). Loss는 train loss의 마지막 1,000 스텝 평균. *데이터셋이 다름(55,129 프레임). 나머지는 79 에피소드 데이터셋.</span></li>
-          <li><b>실패를 하나하나 분류.</b> 실패 18건 중 11건이 그리퍼 위치 문제였습니다. 잡기를 놓쳤거나 집게가 물체 위에 얹혔습니다.</li>
-          <li><b>원인은 타이밍.</b> 50스텝짜리 청크 하나를 만드는 데 약 1.9초가 걸리고, 그동안 팔은 멈춰 있습니다. 그다음 약 1.9초는 화면을 다시 보지 않고 청크를 그대로 재생합니다. 결국 3.8초에 한 번만 장면을 보는 셈이라, 제어 루프가 26 Hz가 아니라 13 Hz로 돌고 있었습니다. 빈 그리퍼를 접시까지 들고 가던 것도 이걸로 설명됩니다. 잡기는 이미 실패했는데, 다음에 볼 때까지 팔은 그걸 모릅니다.</li>
-          <li><b>노이즈 영향 확인.</b> 판단 시점마다 정책을 오프라인으로 32번씩 다시 샘플링했습니다. 첫 판단만 빼면 샘플이 거의 한곳에 몰려 있었습니다. 실패가 샘플링 운 때문은 아니었다는 뜻입니다.</li>
+            <span style="display:block;font-size:13px;color:var(--muted)">배치 · 스텝. cosine decay, warmup 1,000 스텝(b8은 666). Loss는 train loss의 마지막 1,000 스텝 평균. *다른 데이터셋 사용(55,129 프레임). 나머지는 79 에피소드 데이터셋.</span></li>
+          <li><b>실패 원인 분석.</b> 실패 18건 중 11건이 그리퍼 위치 오류였습니다. 파지에 실패했거나 집게가 물체 위에 얹힌 경우입니다.</li>
+          <li><b>인지 지연.</b> 파지에 실패한 뒤에도 빈 그리퍼를 접시까지 옮기는 현상이 있었습니다. 50스텝 청크 하나를 생성하는 데 약 1.9초가 걸리며, 그동안 팔은 정지합니다. 이후 약 1.9초 동안은 장면을 다시 관측하지 않고 청크를 그대로 재생합니다. 즉 약 3.8초에 한 번만 장면을 관측하므로 제어 루프가 26 Hz가 아닌 13 Hz로 동작했고, 파지 실패는 다음 관측 시점에야 반영됩니다.</li>
+          <li><b>샘플링 노이즈 검증.</b> 판단 시점마다 정책을 오프라인으로 32회씩 재샘플링했습니다. 첫 판단을 제외하면 샘플이 좁은 범위에 집중되어, 실패가 샘플링의 우연에 의한 것이 아님을 확인했습니다.</li>
         </ol>
         <ul class="chips"><li>LeRobot</li><li>SmolVLA</li><li>PyTorch</li><li>RTX 3080 Laptop</li><li>720p 카메라 2대</li></ul>
         <div class="links"><a href="https://github.com/asd417/arm_ws" target="_blank" rel="noopener">github / arm_ws →</a></div>
@@ -362,28 +362,28 @@ body { font-family: "Inter", "Noto Sans KR", system-ui, sans-serif; word-break: 
     <!-- DECEPTACON -->
     <article class="project flip">
       <div class="media rv">
-        <div class="frame"><img src="assets/deceptacon/cad-ball.png" alt="공 형태로 말린 DECEPTACON CAD"></div>
+        <div class="frame"><img src="assets/deceptacon/cad-ball.png" alt="구형으로 접힌 DECEPTACON CAD"></div>
         <div class="thumbs">
           <button class="thumb" data-lb="assets/deceptacon/leg-linkage-annotated.png" data-cap="치수를 표시한 다리 링키지"><img src="assets/deceptacon/leg-linkage-annotated.png" alt="치수를 표시한 다리 링키지" loading="lazy"></button>
           <button class="thumb" data-lb="assets/deceptacon/cad-walker.png" data-cap="보행 형태: 다리를 편 상태"><img src="assets/deceptacon/cad-walker.png" alt="보행 형태 CAD" loading="lazy"></button>
           <button class="thumb" data-lb="assets/deceptacon/leg-mechanism.jpg" data-cap="출력한 다리 메커니즘"><img src="assets/deceptacon/leg-mechanism.jpg" alt="출력한 다리 메커니즘" loading="lazy"></button>
           <button class="thumb" data-lb="assets/deceptacon/hero-with-robot.jpg" data-cap="완성된 외피"><img src="assets/deceptacon/hero-with-robot.jpg" alt="완성된 로봇을 들고 있는 모습" loading="lazy"></button>
-          <button class="thumb" data-lb="assets/deceptacon/whiteboard-sketch.jpg" data-cap="화이트보드에 그린 첫 다리 스케치"><img src="assets/deceptacon/whiteboard-sketch.jpg" alt="화이트보드 스케치" loading="lazy"></button>
-          <button class="thumb" data-lb="assets/deceptacon/first-leg-print.jpg" data-cap="처음 출력한 다리"><img src="assets/deceptacon/first-leg-print.jpg" alt="처음 출력한 다리" loading="lazy"></button>
+          <button class="thumb" data-lb="assets/deceptacon/whiteboard-sketch.jpg" data-cap="다리 초기 스케치(화이트보드)"><img src="assets/deceptacon/whiteboard-sketch.jpg" alt="화이트보드 스케치" loading="lazy"></button>
+          <button class="thumb" data-lb="assets/deceptacon/first-leg-print.jpg" data-cap="다리 첫 출력물"><img src="assets/deceptacon/first-leg-print.jpg" alt="처음 출력한 다리" loading="lazy"></button>
           <button class="thumb" data-lb="assets/deceptacon/internals.jpg" data-cap="서보와 전장품이 들어간 섀시"><img src="assets/deceptacon/internals.jpg" alt="내부 구조" loading="lazy"></button>
           <button class="thumb" data-lb="assets/deceptacon/cad-topdown.png" data-cap="위에서 본 다리 네 개 배치"><img src="assets/deceptacon/cad-topdown.png" alt="위에서 본 CAD" loading="lazy"></button>
         </div>
       </div>
       <div class="rv">
         <div class="kicker"><span class="when">2026 봄</span><span>로보틱스 수업</span><span>팀 프로젝트</span></div>
-        <h3>DECEPTACON: 아르마딜로처럼 몸을 마는 로봇</h3>
-        <p>공 모양으로 있다가 다리 네 개를 펴고 걷는 로봇을 팀으로 만들었습니다. 제 담당은 <b>기구 설계와 제작</b>이었습니다.
-          CAD와 3D 프린팅 전부, 출력 품질·공차 테스트, 베어링 배치를 맡았고 전장은 팀원들이 만들었습니다.</p>
+        <h3>DECEPTACON: 아르마딜로처럼 구형으로 변형되는 로봇</h3>
+        <p>구형 상태에서 다리 네 개를 펼쳐 보행하는 로봇을 팀 프로젝트로 제작했습니다. 제 담당은 <b>기구 설계 및 제작</b>이었습니다.
+          CAD와 3D 프린팅 전반, 출력 품질·공차 시험, 베어링 배치를 맡았으며 전장은 팀원들이 담당했습니다.</p>
         <ol class="story">
-          <li><b>V1 다리</b>: Servobot 방식에 다리를 접어 넣는 관절을 하나 더 단 구조. 모터까지 다리와 같이 밖으로 나와야 해서 너무 컸습니다.</li>
-          <li><b>V2 다리</b>: 외피 패널을 <em>그대로</em> 다리로 쓰고, 서보 하나가 패널을 밖으로 젖힙니다. 다리 하나에 서보 3개가 필요하던 것이 2개로 줄었습니다.</li>
-          <li><b>걸을 때 파손</b>: 베어링을 받치던 출력 로드가 부러졌습니다. 금속 볼트와 스페이서로 바꿨지만 이번엔 베어링이 빠졌습니다.</li>
-          <li><b>배운 점</b>: 출력한 로드로는 베어링 하중을 못 버팁니다. 베어링은 꽉 물어 주는 하우징에 넣고, 몸체 전체를 뽑기 전에 다리 하나로 보행 하중부터 시험해야 합니다.</li>
+          <li><b>V1 다리</b>: Servobot 방식에 다리 수납용 관절을 추가한 구조. 모터까지 다리와 함께 외부로 전개되어야 해서 부피가 과도했습니다.</li>
+          <li><b>V2 다리</b>: 외피 패널을 <em>그대로</em> 다리로 사용하고, 서보 하나로 패널을 외부로 전개합니다. 다리당 서보 수를 3개에서 2개로 줄였습니다.</li>
+          <li><b>보행 중 파손</b>: 보행 중에 베어링을 받치던 출력 로드가 파손되었습니다. 금속 볼트와 스페이서로 교체했으나 이번에는 베어링이 이탈했습니다.</li>
+          <li><b>교훈</b>: 출력 로드로는 베어링 하중을 견딜 수 없습니다. 베어링은 고정형 하우징에 안착시키고, 몸체 전체를 출력하기 전에 다리 하나로 보행 하중 시험을 먼저 해야 합니다.</li>
         </ol>
         <ul class="chips"><li>Fusion 360</li><li>FDM 프린팅</li><li>링키지 설계</li><li>베어링·공차</li><li>MG996R 서보</li></ul>
       </div>
@@ -396,14 +396,14 @@ body { font-family: "Inter", "Noto Sans KR", system-ui, sans-serif; word-break: 
       </div>
       <div class="rv">
         <div class="kicker"><span class="when">2026 · 진행 중</span><span>임베디드</span><span>C++</span></div>
-        <h3>STS3215 서보 드라이버, 버스 프로토콜부터 직접</h3>
-        <p>SO-ARM101은 Feetech STS3215 시리얼 버스 서보로 움직입니다. 제조사 SDK를 쓰지 않고 패킷 구성, 체크섬,
-          레지스터 맵, 단위 변환까지 드라이버를 직접 짰습니다. 핵심 라이브러리 하나를 Windows 시리얼 백엔드와 Arduino IDE가 같이 씁니다.</p>
+        <h3>STS3215 서보 드라이버: 버스 프로토콜부터 직접 구현</h3>
+        <p>SO-ARM101은 Feetech STS3215 시리얼 버스 서보로 구동됩니다. 제조사 SDK 없이 패킷 구성, 체크섬,
+          레지스터 맵, 단위 변환까지 드라이버를 직접 구현했습니다. 하나의 핵심 라이브러리를 Windows 시리얼 백엔드와 Arduino IDE에서 공용으로 사용합니다.</p>
         <ol class="story">
-          <li><b>이식 가능한 코어</b>: g++와 Arduino 툴체인 양쪽에서 컴파일되는 순수 C++11. 플랫폼별 입출력은 백엔드 하나에 몰아 뒀습니다.</li>
-          <li><b>하드웨어 없이 테스트</b>: 가상 버스를 두고 패킷이 맞게 나가는지 확인합니다.</li>
-          <li><b>실물에서 확인</b>: 실제 서보로 ping, 위치 읽기·쓰기까지 됩니다. Uno 데모에서는 16×2 LCD 메뉴, 버튼, 가변저항으로 서보를 움직입니다.</li>
-          <li><b>다음 할 일</b>: 오류 처리, 서보 여러 개를 읽을 때 속도 측정, Uno에서 직접 도는 조이스틱 IK.</li>
+          <li><b>플랫폼 독립성</b>: g++와 Arduino 툴체인 모두에서 컴파일되는 순수 C++11 코어. 플랫폼별 입출력은 단일 백엔드로 분리했습니다.</li>
+          <li><b>하드웨어 없는 테스트</b>: 가상 버스로 패킷 송신의 정확성을 검증합니다.</li>
+          <li><b>실물 검증</b>: 실제 서보에서 ping, 위치 읽기·쓰기가 동작합니다. Uno 데모에서는 16×2 LCD 메뉴, 버튼, 가변저항으로 서보를 제어합니다.</li>
+          <li><b>추후 작업</b>: 오류 처리, 다중 서보 읽기 속도 측정, Uno 단독 구동 조이스틱 IK.</li>
         </ol>
         <ul class="chips"><li>C++11</li><li>UART 반이중</li><li>Arduino</li><li>Win32 serial</li></ul>
         <div class="links">
@@ -421,9 +421,9 @@ body { font-family: "Inter", "Noto Sans KR", system-ui, sans-serif; word-break: 
       <div class="rv">
         <div class="kicker"><span class="when">2026</span><span>ROS 2</span><span>시뮬레이션</span></div>
         <h3>SO-ARM101을 ROS 2 · MuJoCo · Gazebo로</h3>
-        <p>MuJoCo와 Gazebo 양쪽에서 도는 SO-ARM101용 ROS 2 패키지를 만들고, 로봇 description에 카메라 자리를 추가했습니다.
-          <code>lerobot-ros</code> 포크에는 <code>so101_mujoco</code> 로봇 타입을 넣어서, LeRobot 텔레오퍼레이션과 정책이
-          ROS 컨트롤러를 거쳐 시뮬레이션 속 팔을 움직일 수 있게 했습니다.</p>
+        <p>MuJoCo와 Gazebo에서 모두 동작하는 SO-ARM101용 ROS 2 패키지를 개발하고, 로봇 description에 카메라 슬롯을 추가했습니다.
+          <code>lerobot-ros</code> 포크에 <code>so101_mujoco</code> 로봇 타입을 추가해, LeRobot 텔레오퍼레이션과 정책이
+          ROS 컨트롤러를 통해 시뮬레이션 속 로봇팔을 제어하도록 했습니다.</p>
         <ul class="chips"><li>ROS 2</li><li>ros2_control</li><li>MuJoCo</li><li>Gazebo</li><li>URDF</li></ul>
         <div class="links">
           <a href="https://github.com/asd417/so_arm101_ros2" target="_blank" rel="noopener">github / so_arm101_ros2 →</a>
@@ -445,15 +445,15 @@ body { font-family: "Inter", "Noto Sans KR", system-ui, sans-serif; word-break: 
         <button class="yt frame" data-yt="2sZ6j1X3Qzo" aria-label="NeuroPAL 플레이 영상 재생">
           <img src="assets/neuropal/thumbnail.jpg" alt="" loading="lazy"><span class="play"></span>
         </button>
-        <div class="cap">진화시킨 매크로 봇이 스타크래프트: 브루드 워를 플레이하는 영상</div>
+        <div class="cap">진화된 매크로 봇의 스타크래프트: 브루드 워 플레이 영상</div>
         <button class="thumb" style="aspect-ratio:auto" data-lb="assets/neuropal/neuropal-vs-neat.png" data-cap="평가 횟수에 따른 적합도: Neuro-PAL vs. NEAT">
           <img src="assets/neuropal/neuropal-vs-neat.png" alt="Neuro-PAL과 NEAT의 적합도 곡선" loading="lazy"></button>
       </div>
       <div class="rv">
         <div class="kicker"><span class="when">IEEE CoG 2025</span><span>논문</span><span>리스본 발표</span></div>
         <h3>NeuroPAL: 스타크래프트 매크로 운영을 위한 신경진화</h3>
-        <p>NEAT에 <b>Punctuated Anytime Learning</b>을 합친 방법입니다. 빠르지만 대략적인 평가로 진화 방향을 잡고,
-          주기적으로 정밀하게 평가해서 적합도 보정(fitness biasing)으로 바로잡습니다. 저는 매크로 운영 에이전트를 구현하고 평가했고,
+        <p>NEAT에 <b>Punctuated Anytime Learning</b>을 결합한 방법입니다. 빠르지만 근사적인 평가로 진화를 진행하고,
+          주기적인 정밀 평가 결과를 적합도 보정(fitness biasing)에 반영합니다. 매크로 운영 에이전트의 구현과 평가를 담당했으며,
           리스본에서 열린 IEEE Conference on Games에서 논문을 발표했습니다(Rearden 펠로십 지원).</p>
         <p class="note">O’Connor, J., <b>Lee, Y.</b>, &amp; Parker, G. B. (2025). NeuroPAL: Punctuated Anytime Learning with Neuroevolution for Macromanagement in Starcraft: Brood War. <i>IEEE CoG</i>, 1–7.</p>
         <ul class="chips"><li>NEAT</li><li>Punctuated Anytime Learning</li><li>StarCraft: Brood War</li></ul>
@@ -472,20 +472,20 @@ body { font-family: "Inter", "Noto Sans KR", system-ui, sans-serif; word-break: 
       </div>
       <div class="rv">
         <div class="kicker"><span class="when">2026 봄</span><span>아너 논문</span><span>탐색 + 학습</span></div>
-        <h3>소코반 탐색 휴리스틱을 작은 신경망으로 진화시키기</h3>
-        <p>진화로 <b>아주 작은</b> 학습형 휴리스틱을 찾아서, 처음 보는 퍼즐을 A*로 풀 때 쓸 수 있는지 본 연구입니다.
-          정확한 cost-to-go 라벨을 얻으려고 데드락 가지치기를 넣은 순방향 BFS 궤적 생성기를 만들었고,
-          NEAT·CoDeepNEAT 휴리스틱을 학습시켜 맨해튼 거리, DeepCubeA식 CNN과 비교했습니다.</p>
+        <h3>신경진화를 이용한 소형 소코반 탐색 휴리스틱</h3>
+        <p>진화로 찾은 <b>초소형</b> 학습 휴리스틱을 처음 보는 퍼즐의 A* 탐색에 활용할 수 있는지 검증한 연구입니다.
+          정확한 cost-to-go 라벨을 얻기 위해 데드락 가지치기를 적용한 순방향 BFS 궤적 생성기를 구현했고,
+          NEAT·CoDeepNEAT 휴리스틱을 학습시켜 맨해튼 거리 및 DeepCubeA 방식 CNN과 비교했습니다.</p>
         <table class="tbl">
           <thead><tr><th>휴리스틱</th><th class="num">파라미터</th><th class="num">해결 / 294</th></tr></thead>
           <tbody>
             <tr><td>맨해튼 거리</td><td class="num">0</td><td class="num">87.4%</td></tr>
-            <tr class="hl"><td>NEAT (설정 9개 평균)</td><td class="num">~25</td><td class="num">83.9%</td></tr>
-            <tr><td>CoDeepNEAT</td><td class="num">263,361</td><td class="num">88.8%</td></tr>
+            <tr><td>NEAT (설정 9개 평균)</td><td class="num">~25</td><td class="num">83.9%</td></tr>
+            <tr class="hl"><td>CoDeepNEAT</td><td class="num">263,361</td><td class="num">88.8%</td></tr>
             <tr><td>CNN cost-to-go</td><td class="num">2,031,809</td><td class="num">100%</td></tr>
           </tbody>
         </table>
-        <p style="font-size:13px;color:var(--muted)">학습에 쓰지 않은 Boxoban medium 레벨, 노드 10만 개 제한 A*. 가중치 25개 남짓한 네트워크가 사람이 만든 기준선과 4%p 안쪽까지 붙었습니다.</p>
+        <p style="font-size:13px;color:var(--muted)">학습에 사용하지 않은 Boxoban medium 레벨, 노드 10만 개 제한 A*. 가중치 약 25개의 NEAT genome은 목표 채널을 거의 활용하지 못해 상자–목표 거리를 추정할 수 없었고, 설정 9개 모두 맨해튼 거리에 미달했습니다. 기준선을 넘은 것은 경사하강법으로 가중치를 학습한 CoDeepNEAT뿐입니다.</p>
         <ul class="chips"><li>A*</li><li>NEAT</li><li>CoDeepNEAT</li><li>BFS</li><li>Boxoban</li></ul>
       </div>
     </article>
@@ -499,10 +499,10 @@ body { font-family: "Inter", "Noto Sans KR", system-ui, sans-serif; word-break: 
       </div>
       <div class="rv">
         <div class="kicker"><span class="when">2025 여름</span><span>SSRI 연구비</span><span>MuJoCo</span></div>
-        <h3>초파리 비행 제어기 진화시키기</h3>
-        <p>MuJoCo로 구현된 해부학적으로 정밀한 <i>Drosophila</i> 모델(Vaxenburg et al., <i>Nature</i> 2025)의 비행 제어를 다뤘습니다.
-          강화학습 대신 제어 신경망을 진화시키는 쪽으로 접근했고, 방법 네 가지를 비교했습니다.
-          학습은 파이썬 프로세스 여러 개로 병렬 실행했습니다.</p>
+        <h3>초파리 비행 제어기의 신경진화</h3>
+        <p>MuJoCo로 구현된 해부학적으로 정밀한 <i>Drosophila</i> 모델(Vaxenburg et al., <i>Nature</i> 2025)을 대상으로 한 비행 제어 연구입니다.
+          강화학습 대신 제어 신경망을 진화시키는 방식을 택했고, 네 가지 방법을 비교했습니다.
+          학습은 다중 파이썬 프로세스로 병렬 실행했습니다.</p>
         <table class="tbl">
           <thead><tr><th>방법</th><th>600세대 최고 적합도</th><th></th></tr></thead>
           <tbody>
@@ -512,7 +512,7 @@ body { font-family: "Inter", "Noto Sans KR", system-ui, sans-serif; word-break: 
             <tr><td>NEAT</td><td class="num">~110</td><td><div class="bar"><i style="--w:71%"></i></div></td></tr>
           </tbody>
         </table>
-        <p style="font-size:13px;color:var(--muted)">학습 곡선에서 읽은 초기 결과입니다. *Recurrent Neuro-PAL은 약 320세대까지만 돌렸습니다.</p>
+        <p style="font-size:13px;color:var(--muted)">학습 곡선에서 읽은 초기 결과. *Recurrent Neuro-PAL은 약 320세대까지만 실행.</p>
         <ul class="chips"><li>NEAT</li><li>Neuro-PAL</li><li>RNN</li><li>MuJoCo</li><li>multiprocessing</li></ul>
       </div>
     </article>
@@ -520,31 +520,31 @@ body { font-family: "Inter", "Noto Sans KR", system-ui, sans-serif; word-break: 
     <div class="cards rv" style="margin-top:24px; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr))">
       <div class="card">
         <div class="cover-pair">
-          <button class="cover" data-lb="assets/chess/synthetic-render.png" data-cap="Blender로 렌더링하고 라벨까지 자동으로 붙인 2,001장 중 한 장"><img src="assets/chess/synthetic-render.png" alt="합성 체스 렌더" loading="lazy"></button>
+          <button class="cover" data-lb="assets/chess/synthetic-render.png" data-cap="Blender로 렌더링하고 라벨을 자동 생성한 2,001장 중 1장"><img src="assets/chess/synthetic-render.png" alt="합성 체스 렌더" loading="lazy"></button>
           <button class="cover" data-lb="assets/chess/knight-topology.png" data-cap="체스 데이터셋용 나이트 리토폴로지"><img src="assets/chess/knight-topology.png" alt="나이트 메시 토폴로지" loading="lazy" style="object-position:50% 30%"></button>
         </div>
         <div class="body">
           <div class="kicker"><span class="when">2024 가을</span><span>컴퓨터 비전</span></div>
-          <h4>합성 체스 데이터셋으로 YOLOv8 학습</h4>
-          <p>Blender로 체스 말을 모델링·리토폴로지하고, 바운딩 박스까지 알아서 뽑아내는 랜덤 장면 스크립트를 짰습니다.
-            렌더 2,001장, 12개 클래스에 박스 18,990개. 이렇게 만든 데이터셋으로 YOLOv8을 학습하고 평가했습니다.</p>
+          <h4>합성 체스 데이터셋 기반 YOLOv8 학습</h4>
+          <p>Blender로 체스 말을 모델링·리토폴로지하고, 바운딩 박스를 자동 추출하는 랜덤 장면 생성 스크립트를 작성했습니다.
+            렌더 2,001장, 12개 클래스, 박스 18,990개로 구성된 데이터셋으로 YOLOv8을 학습·평가했습니다.</p>
           <ul class="chips"><li>Blender Python</li><li>YOLOv8</li><li>sim-to-real</li></ul>
         </div>
       </div>
       <div class="card">
         <div class="body">
-          <div class="kicker"><span>그 밖의 연구실 작업</span></div>
+          <div class="kicker"><span>기타 연구실 작업</span></div>
           <h4>기타 프로젝트</h4>
           <p>Atari Space Invaders(AIIDE 2025)와 MicroRTS에 적용한 <b>SCOPE</b>(Sparse Cosine Optimized Policy Evolution) ·
-            Unity에서 <b>CMA-ES</b>로 돌린 포식자–피식자 공진화 · MuJoCo에서 서로 협력하는 <b>e-puck</b> 공진화 ·
+            Unity 환경의 <b>CMA-ES</b> 기반 포식자–피식자 공진화 · MuJoCo 환경의 협력형 <b>e-puck</b> 공진화 ·
             NYU Julian Togelius 교수 연구팀의 <b>PuzzleJAX</b> 기여.</p>
         </div>
       </div>
       <div class="card">
         <div class="body">
           <div class="kicker"><span>행동 복제</span></div>
-          <h4>FourierPilots: 행동 복제 입력을 DFT로 압축하기</h4>
-          <p>xPilot 행동 복제 에이전트의 관측 입력을 이산 푸리에 변환으로 압축하고, 압축·학습 파라미터를 바꿔 가며 정확도를 비교했습니다.</p>
+          <h4>FourierPilots: DFT 기반 행동 복제 입력 압축</h4>
+          <p>xPilot 행동 복제 에이전트의 관측 입력을 이산 푸리에 변환으로 압축하고, 압축 및 학습 파라미터에 따른 정확도를 비교했습니다.</p>
           <div class="links">
             <a href="fourierpilots.html">프로젝트 페이지(영문) →</a>
             <a href="https://github.com/asd417/FourierPilots" target="_blank" rel="noopener">github / FourierPilots →</a>
@@ -562,18 +562,18 @@ body { font-family: "Inter", "Noto Sans KR", system-ui, sans-serif; word-break: 
     <article class="project">
       <div class="media rv">
         <div class="frame"><img src="assets/bagel/sponza-atrium.jpg" alt="컬러 포인트 라이트를 켠 Sponza, BagelEngine 렌더"></div>
-        <button class="thumb" style="aspect-ratio:auto" data-lb="assets/bagel/planet.png" data-cap="노이즈 레이어 에디터로 만드는 절차적 행성"><img src="assets/bagel/planet.png" alt="절차적 행성과 노이즈 레이어 에디터" loading="lazy"></button>
+        <button class="thumb" style="aspect-ratio:auto" data-lb="assets/bagel/planet.png" data-cap="노이즈 레이어 에디터로 생성한 절차적 행성"><img src="assets/bagel/planet.png" alt="절차적 행성과 노이즈 레이어 에디터" loading="lazy"></button>
       </div>
       <div class="rv">
         <div class="kicker"><span class="when">2023.11 → 지금</span><span>C++ · Vulkan</span></div>
-        <h3>BagelEngine: 처음부터 짠 Vulkan 엔진</h3>
-        <p>2023년 11월에 시작해서 지금도 틈틈이 손보는 3D 엔진입니다. 배치 렌더링과 ECS로 시작해 PBR, 물리, 절차적 월드까지 붙였습니다.
-          단계마다 GitHub 위키에 개발 일지를 남겼고, 지금 30편이 쌓였습니다.</p>
+        <h3>BagelEngine: 직접 개발한 Vulkan 엔진</h3>
+        <p>2023년 11월부터 개발 중인 3D 엔진입니다. 배치 렌더링과 ECS에서 출발해 PBR, 물리, 절차적 월드 생성까지 구현했습니다.
+          단계별 개발 일지를 GitHub 위키에 기록하고 있으며, 현재 30편입니다.</p>
         <ol class="story">
           <li><b>렌더러</b>: 바인드리스 디스크립터, 인다이렉트·인스턴스 드로우, 세컨더리 커맨드 버퍼, 노멀 맵을 쓰는 PBR, 캐스케이드 섀도, 블룸, SMAA.</li>
-          <li><b>데이터 지향 코어</b>: EnTT 컴포넌트를 연속된 메모리에 두고 캐시 친화적으로 순회합니다. 물리는 Jolt.</li>
-          <li><b>콘텐츠</b>: 스켈레탈 애니메이션까지 되는 glTF 로딩, YAML 씬 파일, 노이즈 레이어를 쌓아 만드는 절차적 행성 생성기.</li>
-          <li><b>툴링</b>: 엔진 안의 콘솔과, MCP 서버를 붙인 원격 콘솔. 에이전트가 엔진을 조작하고 스크린샷도 찍을 수 있습니다. 이 페이지의 엔진 스크린샷도 그렇게 찍었습니다.</li>
+          <li><b>데이터 지향 코어</b>: EnTT 컴포넌트를 연속 메모리에 배치해 캐시 친화적으로 순회합니다. 물리는 Jolt.</li>
+          <li><b>콘텐츠</b>: 스켈레탈 애니메이션을 지원하는 glTF 로더, YAML 씬 파일, 노이즈 레이어 합성 방식의 절차적 행성 생성기.</li>
+          <li><b>툴링</b>: 엔진 내장 콘솔과 MCP 서버 연동 원격 콘솔. 에이전트가 엔진을 조작하고 스크린샷을 촬영할 수 있으며, 이 페이지의 엔진 스크린샷도 이 방식으로 촬영했습니다.</li>
         </ol>
         <ul class="chips"><li>C++</li><li>Vulkan</li><li>EnTT</li><li>Jolt</li><li>ImGui</li><li>GLSL</li></ul>
         <div class="links">
@@ -589,14 +589,14 @@ body { font-family: "Inter", "Noto Sans KR", system-ui, sans-serif; word-break: 
 <!-- ===================== CAD ===================== -->
 <section id="cad">
   <div class="wrap">
-    <div class="sec-head rv"><span class="sec-num">04</span><h2>CAD · 제작</h2><p>실제 부품 치수에 맞춰 설계하고, 뽑아서 직접 끼워 봤습니다.</p></div>
+    <div class="sec-head rv"><span class="sec-num">04</span><h2>CAD · 제작</h2><p>실제 부품 치수에 맞춰 설계하고, 출력 후 직접 조립해 검증했습니다.</p></div>
     <div class="cards rv">
       <div class="card">
         <button class="cover" data-lb="assets/sff_case/case-front.jpg" data-cap="SFF 케이스 v2, 출력 후 조립"><img src="assets/sff_case/case-front.jpg" alt="출력해서 조립한 아르데코 SFF PC 케이스" loading="lazy"></button>
         <div class="body">
           <h4>아르데코 SFF PC 케이스</h4>
-          <p>실제 GPU, 파워, 팬 모델에 맞춰 설계하고 22개 부품으로 나눠 출력한 소형 PC 케이스입니다.
-            두 번 새로 만들었고, v2에는 출력한 내부 프레임을 넣었습니다.</p>
+          <p>실제 GPU, 파워, 팬 모델에 맞춰 설계하고 22개 부품으로 분할 출력한 소형 PC 케이스입니다.
+            두 차례 전면 개정했으며, v2에는 출력 내부 프레임을 적용했습니다.</p>
           <ul class="chips"><li>Fusion 360</li><li>분할 출력</li></ul>
         </div>
       </div>
@@ -604,7 +604,7 @@ body { font-family: "Inter", "Noto Sans KR", system-ui, sans-serif; word-break: 
         <button class="cover" data-lb="assets/camera-holder/printed.jpg" data-cap="레진으로 출력한 각도 조절 카메라 마운트"><img src="assets/camera-holder/printed.jpg" alt="출력한 카메라 홀더" loading="lazy"></button>
         <div class="body">
           <h4>각도 조절 카메라 마운트</h4>
-          <p>SO-ARM101 작업 공간을 찍는 카메라용 힌지 마운트를 레진으로 출력했습니다. M10 나사산과 10° 간격 홈이 있어서 같은 각도로 다시 맞추기 쉽습니다.</p>
+          <p>SO-ARM101 작업 공간을 찍는 카메라용 힌지 마운트를 레진으로 출력했습니다. M10 나사산과 10° 간격의 홈으로 동일한 각도를 쉽게 재현할 수 있습니다.</p>
           <ul class="chips"><li>레진 프린팅</li><li>고정구</li></ul>
         </div>
       </div>
@@ -622,7 +622,7 @@ body { font-family: "Inter", "Noto Sans KR", system-ui, sans-serif; word-break: 
         <ul class="tl">
           <li><span class="d">2026.10 – 2027.01 (진행 중)</span><div><b>교육생</b>, 현대자동차그룹 HINT — Mobility AI 트랙<p>고용노동부 K-뉴딜 아카데미의 일환으로 현대자동차그룹이 운영하는 3개월 전일제 임베디드·모빌리티 AI 교육 과정.</p></div></li>
           <li><span class="d">2024 – 2026</span><div><b>학부 연구원</b>, Autonomous Agent Learning Lab<p>신경진화, 다중 에이전트 공진화, 비행 제어. IEEE CoG 논문 1편, AIIDE 기여 1건.</p></div></li>
-          <li><span class="d">2025 가을</span><div><b>조교</b>, Entertainment Software Design<p>학생들의 Unity 게임 제작을 돕고, Git·GitHub 세션을 진행했습니다.</p></div></li>
+          <li><span class="d">2025 가을</span><div><b>조교</b>, Entertainment Software Design<p>학생들의 Unity 게임 제작 지원, Git·GitHub 세션 진행.</p></div></li>
           <li><span class="d">2025 가을</span><div><b>학생 시스템 관리자</b>, 컴퓨터과학과<p>학과 네트워크 인프라, 백업, 계정 관리.</p></div></li>
         </ul>
       </div>
@@ -631,7 +631,7 @@ body { font-family: "Inter", "Noto Sans KR", system-ui, sans-serif; word-break: 
         <ul class="tl">
           <li><span class="d">2026.05</span><div><b>컴퓨터과학 학사(B.A.)</b>, 코네티컷 칼리지<p>아너 논문: 신경진화와 탐색.</p></div></li>
           <li><span class="d">2025.08</span><div><b>Rearden International Travel Fellowship</b><p>IEEE CoG 2025(리스본) 발표 출장 지원.</p></div></li>
-          <li><span class="d">2024, 2025</span><div><b>CAP·SSRI 연구비</b><p>두 해 여름 동안 지원을 받아 연구실에서 연구.</p></div></li>
+          <li><span class="d">2024, 2025</span><div><b>CAP·SSRI 연구비</b><p>두 차례 여름 연구 지원.</p></div></li>
           <li><span class="d">TF2 맵 제작</span><div><b>tf2maps “Connect 5” 대회 1위</b><p>팀 포트리스 2 화물 맵 Highwood.</p></div></li>
         </ul>
       </div>
@@ -649,7 +649,7 @@ body { font-family: "Inter", "Noto Sans KR", system-ui, sans-serif; word-break: 
         <a class="btn" href="https://github.com/asd417" target="_blank" rel="noopener">github.com/asd417</a>
       </div>
     </div>
-    <small>© 2026 이영훈 · 프레임워크 없이 직접 쓴 HTML</small>
+    <small>© 2026 이영훈 · 프레임워크 없이 작성한 HTML</small>
   </div>
 </footer>
 

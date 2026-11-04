@@ -503,12 +503,12 @@ dialog.lb button { position: fixed; top: 16px; right: 16px; width: 40px; height:
           <thead><tr><th>Heuristic</th><th class="num">Params</th><th class="num">Solved / 294</th></tr></thead>
           <tbody>
             <tr><td>Manhattan distance</td><td class="num">0</td><td class="num">87.4%</td></tr>
-            <tr class="hl"><td>NEAT (9-config mean)</td><td class="num">~25</td><td class="num">83.9%</td></tr>
-            <tr><td>CoDeepNEAT</td><td class="num">263,361</td><td class="num">88.8%</td></tr>
+            <tr><td>NEAT (9-config mean)</td><td class="num">~25</td><td class="num">83.9%</td></tr>
+            <tr class="hl"><td>CoDeepNEAT</td><td class="num">263,361</td><td class="num">88.8%</td></tr>
             <tr><td>CNN cost-to-go</td><td class="num">2,031,809</td><td class="num">100%</td></tr>
           </tbody>
         </table>
-        <p style="font-size:13px;color:var(--muted)">Held-out Boxoban medium levels, A* with a 100k-node budget. A ~25-weight network gets within 4 points of a hand-made baseline.</p>
+        <p style="font-size:13px;color:var(--muted)">Held-out Boxoban medium levels, A* with a 100k-node budget. The ~25-weight NEAT genome barely reads the goal channel, so it can’t estimate box-to-goal distance and falls below Manhattan in all 9 configs. Only CoDeepNEAT, with gradient-trained weights, clears it.</p>
         <ul class="chips"><li>A*</li><li>NEAT</li><li>CoDeepNEAT</li><li>BFS</li><li>Boxoban</li></ul>
       </div>
     </article>

@@ -7,6 +7,8 @@
 <meta name="description" content="Yeonghun Lee: robot software, embedded control and learning-based control. SO-ARM101 imitation learning, servo drivers, a transforming robot, neuroevolution research and a Vulkan engine.">
 <meta property="og:title" content="Yeonghun Lee · Robotics Software">
 <meta property="og:description" content="Robot software, embedded control and learning-based control.">
+<link rel="alternate" hreflang="en" href="https://asd417.github.io/">
+<link rel="alternate" hreflang="ko" href="https://asd417.github.io/ko.html">
 <meta property="og:image" content="assets/deceptacon/cad-walker.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -50,6 +52,11 @@ nav.scrolled { border-bottom-color: var(--line); }
 .nav-links a { font-size: 14px; color: var(--muted); text-decoration: none; padding: 6px 12px; border-radius: 999px; white-space: nowrap; transition: color .2s, background .2s; }
 .nav-links a:hover { color: var(--text); }
 .nav-links a.active { color: #111; background: var(--accent); }
+.lang { display: flex; gap: 2px; flex-shrink: 0; font: 500 12px var(--mono); }
+.lang a, .lang b { padding: 4px 8px; border-radius: 6px; text-decoration: none; font-weight: 500; }
+.lang a { color: var(--muted); }
+.lang a:hover { color: var(--text); }
+.lang b { color: var(--text); border: 1px solid var(--line); }
 
 /* ---------- layout ---------- */
 .wrap { max-width: var(--max); margin: auto; padding: 0 24px; }
@@ -255,6 +262,7 @@ dialog.lb button { position: fixed; top: 16px; right: 16px; width: 40px; height:
       <a href="#cad">CAD</a>
       <a href="#about">About</a>
     </div>
+    <div class="lang"><b>EN</b><a href="ko.html" hreflang="ko" lang="ko">한국어</a></div>
   </div>
 </nav>
 
@@ -313,6 +321,8 @@ dialog.lb button { position: fixed; top: 16px; right: 16px; width: 40px; height:
           <button class="thumb" data-lb="assets/smolvla/control_rate.png" data-cap="Inference latency vs. chunk playback"><img src="assets/smolvla/control_rate.png" alt="Control rate" loading="lazy"></button>
           <button class="thumb" data-lb="assets/smolvla/mode_probe.png" data-cap="Offline re-sampling: 32 noise seeds per decision point"><img src="assets/smolvla/mode_probe.png" alt="Mode probe" loading="lazy"></button>
         </div>
+        <button class="thumb" style="aspect-ratio:auto;margin-top:10px" data-lb="assets/smolvla/ablation_curves.png" data-cap="Train loss (log) and learning rate for four training runs">
+          <img src="assets/smolvla/ablation_curves.png" alt="Train loss and learning-rate curves for four SmolVLA training runs" loading="lazy"></button>
       </div>
       <div class="rv">
         <div class="kicker"><span class="when">2026</span><span>Imitation learning</span><span>Real robot</span></div>
@@ -325,7 +335,18 @@ dialog.lb button { position: fixed; top: 16px; right: 16px; width: 40px; height:
           <div class="fact"><b>79</b><span>teleoperated episodes, 57,519 frames</span></div>
         </div>
         <ol class="story">
-          <li><b>Dataset audit first.</b> The first runs were epoch-starved (≈1.4 epochs). Re-trained for 60k steps (~21 epochs).</li>
+          <li><b>Ablated the training run.</b> Changed one setting at a time: learning rate, batch, steps. At the same 3.48 epochs, lr 1e-5 ended at loss 0.187 vs. 0.089 at 1e-4, so I went back to 1e-4.
+            Both 20k runs flattened at 71–72% of the run. The 60k run passed that point and kept falling to 0.022. The bottleneck was epochs, not the settings.
+            <table class="tbl">
+              <thead><tr><th>Run</th><th class="num">Peak LR</th><th class="num">Epochs</th><th class="num">Loss</th><th class="num">Success</th></tr></thead>
+              <tbody>
+                <tr><td>b4 · 20k</td><td class="num">1e-4</td><td class="num">1.39</td><td class="num">0.111</td><td class="num">—</td></tr>
+                <tr><td>b8 · 20k*</td><td class="num">1e-4</td><td class="num">2.90</td><td class="num">0.088</td><td class="num">—</td></tr>
+                <tr><td>b20 · 10k</td><td class="num">1e-5</td><td class="num">3.48</td><td class="num">0.187</td><td class="num">0/2</td></tr>
+                <tr class="hl"><td>b20 · 60k</td><td class="num">1e-4</td><td class="num">20.86</td><td class="num">0.022</td><td class="num">2/20</td></tr>
+              </tbody>
+            </table>
+            <span style="display:block;font-size:13px;color:var(--muted)">Batch · steps. Cosine decay, 1,000-step warmup (666 for b8). Loss = train loss, mean of the last 1,000 steps. *Different dataset (55,129 frames); the rest use the 79-episode set.</span></li>
           <li><b>Scored every failure.</b> 11 of 18 failures were gripper placement: a missed grasp or the jaw landing on the object.</li>
           <li><b>Found a timing cause.</b> Generating a 50-step chunk took ~1.9 s with the arm frozen, then it played the chunk for another ~1.9 s without looking again. It saw the scene only once every ~3.8 s, so the control loop ran at 13 Hz instead of 26 Hz. This explains carrying an empty gripper to the plate: the grasp missed, but the arm didn’t see it until the next look.</li>
           <li><b>Checked the noise.</b> Re-sampled the policy 32× per decision point offline. Apart from the first decision, samples stayed tightly grouped, so the failures weren’t sampling luck.</li>
@@ -408,6 +429,31 @@ dialog.lb button { position: fixed; top: 16px; right: 16px; width: 40px; height:
         </div>
       </div>
     </article>
+
+    <!-- HINT project: hidden until there is real content. Remove the comment markers to publish.
+    <article class="project">
+      <div class="media rv">
+        <div class="frame"><img src="assets/TODO/TODO.png" alt="TODO: image description" loading="lazy"></div>
+      </div>
+      <div class="rv">
+        <div class="kicker"><span class="when">TODO: date</span><span>TODO: tag</span><span>Hyundai Motor Group HINT</span></div>
+        <h3>TODO: project title</h3>
+        <p>TODO: one-paragraph summary: what was built, on what hardware, and what my part was.</p>
+        <div class="facts">
+          <div class="fact"><b>TODO</b><span>TODO: key metric, measured</span></div>
+          <div class="fact"><b>TODO</b><span>TODO: key metric, measured</span></div>
+        </div>
+        <ol class="story">
+          <li><b>Problem.</b> TODO</li>
+          <li><b>Measurement.</b> TODO</li>
+          <li><b>Cause.</b> TODO</li>
+          <li><b>Improvement.</b> TODO</li>
+        </ol>
+        <ul class="chips"><li>TODO</li><li>TODO</li><li>TODO</li></ul>
+        <div class="links"><a href="https://github.com/asd417/TODO" target="_blank" rel="noopener">github / TODO →</a></div>
+      </div>
+    </article>
+    -->
   </div>
 </section>
 
@@ -597,6 +643,7 @@ dialog.lb button { position: fixed; top: 16px; right: 16px; width: 40px; height:
       <div>
         <h3 class="sub">Experience</h3>
         <ul class="tl">
+          <li><span class="d">Oct 2026 – Jan 2027 (ongoing)</span><div><b>Trainee</b>, Hyundai Motor Group HINT — Mobility AI track<p>3-month full-time embedded &amp; mobility AI program run by Hyundai Motor Group under Korea's K-New Deal Academy (Ministry of Employment and Labor).</p></div></li>
           <li><span class="d">2024 – 2026</span><div><b>Student researcher</b>, Autonomous Agent Learning Lab<p>Neuroevolution, multi-agent coevolution and flight control. One IEEE CoG paper, one AIIDE contribution.</p></div></li>
           <li><span class="d">Fall 2025</span><div><b>Teaching assistant</b>, Entertainment Software Design<p>Helped students build Unity games and ran a session on Git and GitHub.</p></div></li>
           <li><span class="d">Fall 2025</span><div><b>Student system administrator</b>, CS Department<p>Department network infrastructure, backups and accounts.</p></div></li>
